@@ -11,14 +11,9 @@ export const LOG_DIRECTORY = _.defaultTo(process.env.LOG_DIRECTORY, path.resolve
 export const JWT_SECRET = _.defaultTo(process.env.JWT_SECRET, "secret");
 export const SESSION_SECRET = _.defaultTo(process.env.SESSION_SECRET, "secret");
 
-const HOST = _.defaultTo(process.env.HOST);
-const USER = _.defaultTo(process.env.USER);
-const PW = _.defaultTo(process.env.PW);
-const DATABASE = _.defaultTo(process.env.DATABASE);
-
 export const DB = {
-  USER: _.defaultTo(process.env.DB_USER, USER),
-  PASSWORD: _.defaultTo(process.env.DB_USER_PWD, PW),
-  HOST: _.defaultTo(process.env.DB_HOST, HOST),
-  DATABASE: _.defaultTo(process.env.DB_DATABASE, DATABASE)
+  USER: _.defaultTo(dotenv.config().parsed.USER, ''),
+  PASSWORD: _.defaultTo(dotenv.config().parsed.PW, ''),
+  HOST: _.defaultTo(dotenv.config().parsed.HOST, ''),
+  DATABASE: _.defaultTo(dotenv.config().parsed.DATABASE, '')
 }

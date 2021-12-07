@@ -1,8 +1,8 @@
 import express, { Application } from 'express';
-import logger from "./utils/logger";
+import logger from './utils/logger';
 import * as bodyParser from 'body-parser';
 import routes from './routes';
-import cors from "cors";
+import cors from 'cors';
 
 
 const app: Application = express();
@@ -16,7 +16,7 @@ app.use(cors(
   }
 ));
 
-app.use("/", routes);
+app.use('/', routes);
 
 var port = process.env.PORT || 3006;
 

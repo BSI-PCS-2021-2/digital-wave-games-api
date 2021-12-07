@@ -1,6 +1,6 @@
 import knex from 'knex';
 import * as attachPaginate from 'knex-paginate';
-import { DB } from "../utils/secrets";
+import { DB } from '../utils/secrets';
 
 const connection = knex({
 

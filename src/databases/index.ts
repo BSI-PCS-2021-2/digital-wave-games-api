@@ -1,1 +1,1 @@
-export * as mysql from './mysql';
+export * as mysqlDatabase from './mysql.database';

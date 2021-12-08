@@ -1,0 +1,19 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "/home/pedro/Documents/pedro/faculdade/pcs/projeto/back-end/digital-wave-games-api/applogs/.a980325d6908a65b4fc9c8e9035ab09baf6cdcb4-audit.json",
+    "files": [
+        {
+            "date": 1638904537747,
+            "name": "/home/pedro/Documents/pedro/faculdade/pcs/projeto/back-end/digital-wave-games-api/applogs/2021-12-07.log",
+            "hash": "92678f33056c447340084c449e57b0a5"
+        },
+        {
+            "date": 1638976558277,
+            "name": "/home/pedro/Documents/pedro/faculdade/pcs/projeto/back-end/digital-wave-games-api/applogs/2021-12-08.log",
+            "hash": "933ebc26a3572e1754cb14886b31ebb5"
+        }
+    ]
+}

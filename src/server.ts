@@ -23,6 +23,5 @@ var port = process.env.PORT || 3006;
 app
   .listen(port, () => {
     logger.info(`server running on port : ${port}`);
-    console.log(require('dotenv').config())
   })
   .on('error', (e) => logger.error(e));

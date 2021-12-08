@@ -18,7 +18,6 @@ export class ProductsRepository implements IProductsRepository {
                 if (data[0].length > 0) {
                     data[0].forEach(product => {
                         products.push({
-                            id: product['id'],
                             name: product['nome'],
                             price: product['preco'],
                             rate: product['nota'],

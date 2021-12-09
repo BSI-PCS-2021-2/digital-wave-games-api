@@ -122,31 +122,6 @@ export class UsersRepository implements IUsersRepository {
 
         return index;
 
-        // const sql = `INSERT INTO usuario_cliente (nome_usuario, senha, email, bloqueado, tel_1, tel_2, tel_3, email_secundario) VALUES (?, ?, ?, ?, ?, ?, ?, ?);`;
-
-        // try {
-        //     await mysqlDatabase.default.insert(sql, [
-        //         postUserDTO.username || null,
-        //         postUserDTO.password || null,
-        //         postUserDTO.email || null,
-        //         false,
-        //         postUserDTO.phone1 || null,
-        //         postUserDTO.phone2 || null,
-        //         postUserDTO.phone3 || null,
-        //         postUserDTO.secondaryEmail || null
-        //     ]).returning('id')
-        //     .catch(err => {
-        //         logger.error(err);
-        //         throw new Error(err);
-        //     });
-
-        // } catch (error) {
-        //     logger.error(error);
-        //     throw new Error(error);
-        // }
-
-        // return true;
-
     }
 
 }

@@ -20,8 +20,14 @@ export class UsersRepository implements IUsersRepository {
 
                         users.push({
                             id: user['id'],
+                            username: user['nome_usuario'],
                             name: user['nome'],
-                            email: user['email']
+                            email: user['email'],
+                            isEmailConfirmed: user['email_confirmado'],
+                            profileImage: user['foto_perfil'],
+                            failedLoginAttempts: user['acesso_falho'],
+                            nextAllowedAccess: user['liberar_acesso'],
+                            banned: user['bloqueado']
                         });
 
                     });
@@ -41,15 +47,69 @@ export class UsersRepository implements IUsersRepository {
 
     }
 
-    async postUser(postUserDTO: PostUserDTO): Promise<boolean> {
+    async getUser(username: string): Promise<User> {
 
-        const sql = `INSERT INTO usuario_cliente (nome, email) VALUES (?, ?);`;
+        let user: User = null;
+
+        const sql = `SELECT * FROM usuario_cliente WHERE nome_usuario = ?;`;
 
         try {
-            await mysqlDatabase.default.raw(sql, [
-                postUserDTO.name || null,
-                postUserDTO.email || null
-            ])
+            await mysqlDatabase.default.raw(sql, [username || null]).then(data => {
+
+                if (data[0].length > 0) {
+                    data[0].forEach(userResult => {
+
+                        user = {
+                            id: userResult['id'],
+                            username: userResult['nome_usuario'],
+                            name: userResult['nome'],
+                            email: userResult['email'],
+                            isEmailConfirmed: userResult['email_confirmado'],
+                            profileImage: userResult['foto_perfil'],
+                            failedLoginAttempts: userResult['acesso_falho'],
+                            nextAllowedAccess: userResult['liberar_acesso'],
+                            banned: userResult['bloqueado']
+                        };
+
+                    });
+                }
+
+            }).catch(err => {
+                logger.error(err);
+                throw new Error(err);
+            });
+
+        } catch (error) {
+            logger.error(error);
+            throw new Error(error);
+        }
+
+        return user;
+
+    }
+
+    async postUser(postUserDTO: PostUserDTO): Promise<number[]> {
+
+        let index: number[] = [];
+
+        try {
+            
+            await mysqlDatabase
+            .default('usuario_cliente')
+            .returning('id')
+            .insert([{
+                nome_usuario: postUserDTO.username || null,
+                senha: postUserDTO.password || null,
+                email: postUserDTO.email || null,
+                bloqueado: false,
+                tel_1: postUserDTO.phone1 || null,
+                tel_2: postUserDTO.phone2 || null,
+                tel_3: postUserDTO.phone3 || null,
+                email_secundario: postUserDTO.secondaryEmail || null
+            }
+            ]).then( insertedIndex => {
+                index = insertedIndex;
+            })
             .catch(err => {
                 logger.error(err);
                 throw new Error(err);
@@ -60,7 +120,32 @@ export class UsersRepository implements IUsersRepository {
             throw new Error(error);
         }
 
-        return true;
+        return index;
+
+        // const sql = `INSERT INTO usuario_cliente (nome_usuario, senha, email, bloqueado, tel_1, tel_2, tel_3, email_secundario) VALUES (?, ?, ?, ?, ?, ?, ?, ?);`;
+
+        // try {
+        //     await mysqlDatabase.default.insert(sql, [
+        //         postUserDTO.username || null,
+        //         postUserDTO.password || null,
+        //         postUserDTO.email || null,
+        //         false,
+        //         postUserDTO.phone1 || null,
+        //         postUserDTO.phone2 || null,
+        //         postUserDTO.phone3 || null,
+        //         postUserDTO.secondaryEmail || null
+        //     ]).returning('id')
+        //     .catch(err => {
+        //         logger.error(err);
+        //         throw new Error(err);
+        //     });
+
+        // } catch (error) {
+        //     logger.error(error);
+        //     throw new Error(error);
+        // }
+
+        // return true;
 
     }
 

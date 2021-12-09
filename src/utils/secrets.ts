@@ -11,6 +11,8 @@ export const LOG_DIRECTORY = _.defaultTo(process.env.LOG_DIRECTORY, path.resolve
 export const JWT_SECRET = _.defaultTo(process.env.JWT_SECRET, 'secret');
 export const SESSION_SECRET = _.defaultTo(process.env.SESSION_SECRET, 'secret');
 
+export const ENCRYPTION_SECRET = _.defaultTo(dotenv.config().parsed.ENCRYPTION_SECRET, '');
+
 export const DB = {
   USER: _.defaultTo(dotenv.config().parsed.USER, ''),
   PASSWORD: _.defaultTo(dotenv.config().parsed.PW, ''),

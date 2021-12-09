@@ -1,5 +1,6 @@
 import { Product } from '../models';
 import { IProductsRepository } from '../interfaces';
+import logger from '../utils/logger';
 
 export class ProductsService {
 
@@ -14,6 +15,7 @@ export class ProductsService {
             return response;
 
         } catch (error) {
+            logger.error(error);
             throw new Error(error);
         }
 

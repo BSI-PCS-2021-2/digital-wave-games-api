@@ -23,13 +23,42 @@ export class UsersController {
 
     async post(request: Request, response: Response): Promise<Response> {
 
-        const { name, email } = request.body;
+        const { 
+            email,
+            username,
+            name,
+            password,
+            postalCode,
+            city,
+            state,
+            district,
+            number,
+            additionalInfo,
+            street,
+            phone1,
+            phone2,
+            phone3,
+            secondaryEmail
+         } = request.body;
 
         try {
 
             const result = await this.usersService.post({
+                email: email,
+                username: username,
                 name: name,
-                email: email
+                password: password,
+                postalCode: postalCode,
+                city: city,
+                state: state,
+                district: district,
+                number: number,
+                additionalInfo: additionalInfo,
+                street: street,
+                phone1: phone1,
+                phone2: phone2,
+                phone3: phone3,
+                secondaryEmail: secondaryEmail
             });
 
             return response.send(result);

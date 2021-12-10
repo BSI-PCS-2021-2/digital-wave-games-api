@@ -8,22 +8,48 @@ export class ProductsRepository implements IProductsRepository {
 
     async getProducts(): Promise<Product[]> {
 
-        let products: Product[] = [];
+      let products: Product[] = [];
 
-        const sql = `SELECT * FROM produto;`;
+      const sql = `SELECT * FROM produto;`;
 
-        try {
-            await mysqlDatabase.default.raw(sql).then(data => {
+      try {
+          await mysqlDatabase.default.raw(sql).then(data => {
+              console.log(data);
+              if (data[0].length > 0) {
+                console.log(data[0]);
+                data[0].forEach(product => {
 
-                if (data[0].length > 0) {
-                    data[0].forEach(product => {
-                        products.push({
-                            name: product['nome'],
-                            price: product['preco'],
-                            rate: product['nota'],
-                            description: product['descricao']
-                          });
+                    products.push({
+                        id: product['id'],
+                        name: product['nome'],
                     });
+
+                });
+              }
+
+          }).catch(err => {
+              logger.error(err);
+              throw new Error(err);
+          });
+
+      } catch (error) {
+          logger.error(error);
+          throw new Error(error);
+      }
+
+      return users;
+
+    }
+
+    async get(id: number): Promise<Product> {
+
+        let product: Product = {};
+
+        const sql = `SELECT * FROM produto where id=?`;
+        try {
+            await mysqlDatabase.default.raw(sql, [id || null]).then(data => {
+                if (data[0].length > 0) {
+                        product = data[0];
                 }
 
             }).catch(err => {
@@ -35,9 +61,10 @@ export class ProductsRepository implements IProductsRepository {
             logger.error(error);
             throw new Error(error);
         }
-
-        return products;
+        console.log(product)
+        return product;
 
     }
+
 
 }

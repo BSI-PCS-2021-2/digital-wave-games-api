@@ -18,4 +18,17 @@ export class ProductsService {
         }
 
     }
+
+    async get(id: number): Promise<Product> {
+
+        try {
+            console.log(id);
+            const response = await this.productsRepository.get(id);
+
+            return response;
+
+        } catch (error) {
+            throw new Error(error);
+        }
+    }
 }

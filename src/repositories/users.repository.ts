@@ -16,6 +16,7 @@ export class UsersRepository implements IUsersRepository {
             await mysqlDatabase.default.raw(sql).then(data => {
 
                 if (data[0].length > 0) {
+                  console.log(data[0]);
                     data[0].forEach(user => {
 
                         users.push({

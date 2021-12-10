@@ -61,4 +61,4 @@ typings/
 .next
 node_modules
 build/
-applogs/
+/applogs

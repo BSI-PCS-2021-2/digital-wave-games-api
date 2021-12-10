@@ -4,6 +4,7 @@ import { PostUserDTO } from '../models';
 export interface IUsersRepository {
 
     getUsers(): Promise<User[]>;
-    postUser(postUserDTO: PostUserDTO): Promise<boolean>;
+    getUser(username: string): Promise<User>;
+    postUser(postUserDTO: PostUserDTO): Promise<number[]>;
 
 }

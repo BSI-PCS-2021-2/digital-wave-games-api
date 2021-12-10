@@ -1,14 +1,13 @@
 import { UsersController } from './users.controller';
-import { UsersRepository } from '../repositories';
-import { UsersService } from '../services';
 import { ProductsController } from './products.controller';
-import { ProductsRepository } from '../repositories';
-import { ProductsService } from '../services';
+import { UsersRepository, AddressesRepository, ProductsRepository } from '../repositories';
+import { UsersService, ProductsService } from '../services';
 
 const usersRepository = new UsersRepository();
 const productsRepository = new ProductsRepository();
+const addressesRepository = new AddressesRepository();
 
-const usersService = new UsersService(usersRepository);
+const usersService = new UsersService(usersRepository, addressesRepository);
 const productsService = new ProductsService(productsRepository);
 
 const usersController = new UsersController(usersService);

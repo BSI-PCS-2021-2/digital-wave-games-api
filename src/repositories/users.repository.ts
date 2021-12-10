@@ -16,7 +16,6 @@ export class UsersRepository implements IUsersRepository {
             await mysqlDatabase.default.raw(sql).then(data => {
 
                 if (data[0].length > 0) {
-                  console.log(data[0]);
                     data[0].forEach(user => {
 
                         users.push({
@@ -94,7 +93,7 @@ export class UsersRepository implements IUsersRepository {
         let index: number[] = [];
 
         try {
-            
+
             await mysqlDatabase
             .default('usuario_cliente')
             .returning('id')

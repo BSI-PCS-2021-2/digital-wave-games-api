@@ -47,6 +47,47 @@ export class UsersRepository implements IUsersRepository {
 
     }
 
+    async getUser(id: number): Promise<User> {
+
+        let user: User = null;
+
+        const sql = `SELECT * FROM usuario_cliente WHERE id = ?;`;
+
+        try {
+            await mysqlDatabase.default.raw(sql, [id || null]).then(data => {
+
+                if (data[0].length > 0) {
+                    data[0].forEach(userResult => {
+
+                        user = {
+                            id: userResult['id'],
+                            username: userResult['nome_usuario'],
+                            name: userResult['nome'],
+                            email: userResult['email'],
+                            isEmailConfirmed: userResult['email_confirmado'],
+                            profileImage: userResult['foto_perfil'],
+                            failedLoginAttempts: userResult['acesso_falho'],
+                            nextAllowedAccess: userResult['liberar_acesso'],
+                            banned: userResult['bloqueado']
+                        };
+
+                    });
+                }
+
+            }).catch(err => {
+                logger.error(err);
+                throw new Error(err);
+            });
+
+        } catch (error) {
+            logger.error(error);
+            throw new Error(error);
+        }
+
+        return user;
+
+    }
+
     async getUser(username: string): Promise<User> {
 
         let user: User = null;

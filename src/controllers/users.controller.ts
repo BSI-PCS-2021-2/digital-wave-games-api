@@ -1,9 +1,9 @@
 import { Response, Request } from 'express';
-import { UsersService } from '../services';
+import { UsersService, OrdersService } from '../services';
 
 export class UsersController {
 
-    constructor(private usersService: UsersService) {}
+    constructor(private usersService: UsersService, private ordersService: OrdersService) {}
 
     async get(request: Request, response: Response): Promise<Response> {
 
@@ -12,7 +12,7 @@ export class UsersController {
             const result = await this.usersService.get();
 
             return response.send(result);
-            
+
         } catch (error) {
             return response.status(400).json({
                 message: error.message || 'Unexpected error.'
@@ -21,9 +21,53 @@ export class UsersController {
 
     }
 
+    async getByUsername(request: Request, response: Response): Promise<Response> {
+        try {
+            const result = await this.usersService.getByUsername(request.params.username);
+
+            return response.send(result);
+
+        } catch (error) {
+            return response.status(400).json({
+                message: error.message || 'Unexpected error.'
+            })
+        }
+
+    }
+
+    async getOrders(request: Request, response: Response): Promise<Response> {
+
+        try {
+            const result = await this.ordersService.getOrdersByClient(request.params.client_id);
+            return response.send(result);
+
+        } catch (error) {
+            return response.status(400).json({
+                message: error.message || 'Unexpected error.'
+            })
+        }
+
+    }
+
+    async getOrder(request: Request, response: Response): Promise<Response> {
+
+        try {
+
+            const result = await this.ordersService.getOrderByClient(request.params.client_id, request.params.order_id);
+            return response.send(result);
+
+        } catch (error) {
+            return response.status(400).json({
+                message: error.message || 'Unexpected error.'
+            })
+        }
+
+    }
+
+
     async post(request: Request, response: Response): Promise<Response> {
 
-        const { 
+        const {
             email,
             username,
             name,
@@ -62,7 +106,7 @@ export class UsersController {
             });
 
             return response.send(result);
-            
+
         } catch (error) {
             return response.status(400).json({
                 message: error.message || 'Unexpected error.'

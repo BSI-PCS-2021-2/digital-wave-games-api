@@ -5,6 +5,7 @@ export interface IUsersRepository {
 
     getUsers(): Promise<User[]>;
     getUser(username: string): Promise<User>;
+    getUser(id: number);
     postUser(postUserDTO: PostUserDTO): Promise<number[]>;
 
 }

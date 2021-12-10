@@ -23,7 +23,7 @@ export class ProductsController {
 
     async getById(request: Request, response: Response): Promise<Response> {
         try {
-            const result = await this.productsService.get(request.params.id);
+            const result = await this.productsService.getById(request.params.id);
             return response.send(result);
 
         } catch (error) {

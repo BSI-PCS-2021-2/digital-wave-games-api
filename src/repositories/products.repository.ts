@@ -37,19 +37,20 @@ export class ProductsRepository implements IProductsRepository {
           throw new Error(error);
       }
 
-      return users;
+      return products;
 
     }
 
-    async get(id: number): Promise<Product> {
+    async getById(id: number): Promise<Product> {
 
-        let product: Product = {};
+        let product: Product = null;
 
         const sql = `SELECT * FROM produto where id=?`;
         try {
             await mysqlDatabase.default.raw(sql, [id || null]).then(data => {
                 if (data[0].length > 0) {
                         product = data[0];
+                        // criar novo objeto com as colunas
                 }
 
             }).catch(err => {

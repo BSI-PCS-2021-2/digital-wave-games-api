@@ -21,11 +21,11 @@ export class ProductsService {
 
     }
 
-    async get(id: number): Promise<Product> {
+    async getById(id: number): Promise<Product> {
 
         try {
             console.log(id);
-            const response = await this.productsRepository.get(id);
+            const response = await this.productsRepository.getById(id);
 
             return response;
 

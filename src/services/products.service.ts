@@ -14,14 +14,14 @@ export class ProductsService {
 
             return response;
 
-        } catch (error) {
+        } catch (error: any) {
             logger.error(error);
             throw new Error(error);
         }
 
     }
 
-    async getById(id: number): Promise<Product> {
+    async getById(id: number): Promise<Product | null> {
 
         try {
             console.log(id);
@@ -29,7 +29,7 @@ export class ProductsService {
 
             return response;
 
-        } catch (error) {
+        } catch (error: any) {
             throw new Error(error);
         }
     }

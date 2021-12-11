@@ -14,20 +14,7 @@ export class UsersController {
 
             return response.send(result);
 
-        } catch (error) {
-            return response.status(400).json({
-                message: error.message || 'Unexpected error.'
-            })
-        }
-    }
-
-    async getByUsername(request: Request, response: Response): Promise<Response> {
-        try {
-            const result = await this.usersService.getByUsername(request.params.username);
-
-            return response.send(result);
-
-        } catch (error) {
+        } catch (error: any) {
             return response.status(400).json({
                 message: error.message || 'Unexpected error.'
             })
@@ -53,7 +40,8 @@ export class UsersController {
             phone1,
             phone2,
             phone3,
-            secondaryEmail
+            secondaryEmail,
+            code
          } = request.body;
 
         try {
@@ -73,12 +61,13 @@ export class UsersController {
                 phone1: phone1,
                 phone2: phone2,
                 phone3: phone3,
-                secondaryEmail: secondaryEmail
+                secondaryEmail: secondaryEmail,
+                code: code
             });
 
             return response.send(result);
 
-        } catch (error) {
+        } catch (error: any) {
             return response.status(400).json({
                 message: error.message || 'Unexpected error.'
             })

@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { usersController } from '../../controllers';
+import { usersController, confirmationCodesController } from '../../controllers';
 
 
 const router = Router();
@@ -16,9 +16,8 @@ router.post('/users', (request, response) => {
     return usersController.post(request, response);
 });
 
-router.get('/user/:client_id/orders', (request, response) => {
-    console.log('dentro do roteamento')
-    return usersController.getOrdersByClient(request, response);
+router.post('/confirmation-codes', (request, response) => {
+    return confirmationCodesController.post(request, response);
 });
 
 export default router;

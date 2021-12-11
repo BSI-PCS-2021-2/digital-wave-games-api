@@ -3,14 +3,15 @@ import { PostUserDTO } from '../models';
 import { IUsersRepository, IAddressesRepository } from '../interfaces';
 import { ENCRYPTION_SECRET } from '../utils/secrets';
 import logger from '../utils/logger';
-
-const cryptoJS = require("crypto-js");
+import { ConfirmationCodesRepository } from '../repositories/confirmationCodes.repository';
+import sha256 from 'crypto-js/sha256';
 
 export class UsersService {
 
     constructor(
         private usersRepository: IUsersRepository,
-        private addressesRepository: IAddressesRepository
+        private addressesRepository: IAddressesRepository,
+        private confirmationCodesRepository: ConfirmationCodesRepository
         ) { }
 
     async get(): Promise<User[]> {
@@ -35,7 +36,7 @@ export class UsersService {
 
             return response;
 
-        } catch (error) {
+        } catch (error: any) {
             logger.error(error);
             throw new Error(error);
         }
@@ -47,12 +48,17 @@ export class UsersService {
         try {
 
             const user = await this.usersRepository.getUser(postUserDTO.username);
+            const code = await this.confirmationCodesRepository.getCode(postUserDTO.email);
 
             if (user !== null) {
-                return [];
+                return [-1];
             }
 
-            postUserDTO.password = cryptoJS.AES.encrypt(postUserDTO.password, ENCRYPTION_SECRET).toString();
+            if (code !== postUserDTO.code) {
+                return [-2];
+            }
+
+            postUserDTO.password = sha256(postUserDTO.password + ENCRYPTION_SECRET).toString();
 
             const response: number[] = await this.usersRepository.postUser(postUserDTO);
 
@@ -71,7 +77,7 @@ export class UsersService {
 
             return response;
 
-        } catch (error) {
+        } catch (error: any) {
             logger.error(error);
             throw new Error(error);
         }

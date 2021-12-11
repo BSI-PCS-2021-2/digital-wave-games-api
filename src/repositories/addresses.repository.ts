@@ -26,7 +26,7 @@ export class AddressesRepository implements IAddressesRepository {
                 throw new Error(err);
             });
 
-        } catch (error) {
+        } catch (error: any) {
             logger.error(error);
             throw new Error(error);
         }

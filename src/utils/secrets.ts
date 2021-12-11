@@ -11,11 +11,18 @@ export const LOG_DIRECTORY = _.defaultTo(process.env.LOG_DIRECTORY, path.resolve
 export const JWT_SECRET = _.defaultTo(process.env.JWT_SECRET, 'secret');
 export const SESSION_SECRET = _.defaultTo(process.env.SESSION_SECRET, 'secret');
 
-export const ENCRYPTION_SECRET = _.defaultTo(dotenv.config().parsed.ENCRYPTION_SECRET, '');
+export const ENCRYPTION_SECRET = _.defaultTo(dotenv.config().parsed?.ENCRYPTION_SECRET, '');
 
 export const DB = {
-  USER: _.defaultTo(dotenv.config().parsed.USER, ''),
-  PASSWORD: _.defaultTo(dotenv.config().parsed.PW, ''),
-  HOST: _.defaultTo(dotenv.config().parsed.HOST, ''),
-  DATABASE: _.defaultTo(dotenv.config().parsed.DATABASE, '')
+  USER: _.defaultTo(dotenv.config().parsed?.USER, ''),
+  PASSWORD: _.defaultTo(dotenv.config().parsed?.PW, ''),
+  HOST: _.defaultTo(dotenv.config().parsed?.HOST, ''),
+  DATABASE: _.defaultTo(dotenv.config().parsed?.DATABASE, '')
+}
+
+export const EMAIL = {
+  EMAIL_SERVICE: _.defaultTo(dotenv.config().parsed?.EMAIL_SERVICE, ''),
+  EMAIL_HOST: _.defaultTo(dotenv.config().parsed?.EMAIL_HOST, ''),
+  EMAIL_USER: _.defaultTo(dotenv.config().parsed?.EMAIL_USER, ''),
+  EMAIL_PASSWORD: _.defaultTo(dotenv.config().parsed?.EMAIL_PASSWORD, '')
 }

@@ -17,7 +17,7 @@ export class UsersRepository implements IUsersRepository {
 
                 if (data[0].length > 0) {
                   console.log(data[0]);
-                    data[0].forEach(user => {
+                    data[0].forEach((user: any) => {
 
                         users.push({
                             id: user['id'],
@@ -34,12 +34,12 @@ export class UsersRepository implements IUsersRepository {
                     });
                 }
 
-            }).catch(err => {
-                logger.error(err);
-                throw new Error(err);
+            }).catch((error: any) => {
+                logger.error(error);
+                throw new Error(error);
             });
 
-        } catch (error) {
+        } catch (error: any) {
             logger.error(error);
             throw new Error(error);
         }
@@ -48,9 +48,9 @@ export class UsersRepository implements IUsersRepository {
 
     }
 
-    async getUser(username: string): Promise<User> {
+    async getUser(username: string): Promise<User | null> {
 
-        let user: User = null;
+        let user: User | null = null;
 
         const sql = `SELECT * FROM usuario_cliente WHERE nome_usuario = ?;`;
 
@@ -58,7 +58,7 @@ export class UsersRepository implements IUsersRepository {
             await mysqlDatabase.default.raw(sql, [username || null]).then(data => {
 
                 if (data[0].length > 0) {
-                    data[0].forEach(userResult => {
+                    data[0].forEach((userResult: any) => {
 
                         user = {
                             id: userResult['id'],
@@ -75,12 +75,12 @@ export class UsersRepository implements IUsersRepository {
                     });
                 }
 
-            }).catch(err => {
-                logger.error(err);
-                throw new Error(err);
+            }).catch((error: any) => {
+                logger.error(error);
+                throw new Error(error);
             });
 
-        } catch (error) {
+        } catch (error: any) {
             logger.error(error);
             throw new Error(error);
         }
@@ -111,12 +111,12 @@ export class UsersRepository implements IUsersRepository {
             ]).then( insertedIndex => {
                 index = insertedIndex;
             })
-            .catch(err => {
-                logger.error(err);
-                throw new Error(err);
+            .catch((error: any) => {
+                logger.error(error);
+                throw new Error(error);
             });
 
-        } catch (error) {
+        } catch (error: any) {
             logger.error(error);
             throw new Error(error);
         }

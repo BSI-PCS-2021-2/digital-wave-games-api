@@ -17,7 +17,7 @@ export class ProductsRepository implements IProductsRepository {
               console.log(data);
               if (data[0].length > 0) {
                 console.log(data[0]);
-                data[0].forEach(product => {
+                data[0].forEach((product: any) => {
 
                     products.push({
                         id: product['id'],
@@ -32,7 +32,7 @@ export class ProductsRepository implements IProductsRepository {
               throw new Error(err);
           });
 
-      } catch (error) {
+      } catch (error: any) {
           logger.error(error);
           throw new Error(error);
       }
@@ -41,9 +41,9 @@ export class ProductsRepository implements IProductsRepository {
 
     }
 
-    async getById(id: number): Promise<Product> {
+    async getById(id: number): Promise<Product | null> {
 
-        let product: Product = null;
+        let product: Product | null = null;
 
         const sql = `SELECT * FROM produto where id=?`;
         try {
@@ -58,11 +58,11 @@ export class ProductsRepository implements IProductsRepository {
                 throw new Error(err);
             });
 
-        } catch (error) {
+        } catch (error: any) {
             logger.error(error);
             throw new Error(error);
         }
-        console.log(product)
+
         return product;
 
     }

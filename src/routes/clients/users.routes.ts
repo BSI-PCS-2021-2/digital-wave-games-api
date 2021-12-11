@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { usersController } from '../../controllers';
+import { usersController, confirmationCodesController } from '../../controllers';
 
 
 const router = Router();
@@ -10,6 +10,10 @@ router.get('/users', (request, response) => {
 
 router.post('/users', (request, response) => {
     return usersController.post(request, response);
+});
+
+router.post('/confirmation-codes', (request, response) => {
+    return confirmationCodesController.post(request, response);
 });
 
 export default router;

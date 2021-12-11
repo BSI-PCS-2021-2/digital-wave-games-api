@@ -13,7 +13,7 @@ export class ProductsController {
 
             return response.send(result);
 
-        } catch (error) {
+        } catch (error: any) {
             return response.status(400).json({
                 message: error.message || 'Unexpected error.'
             })
@@ -23,10 +23,10 @@ export class ProductsController {
 
     async getById(request: Request, response: Response): Promise<Response> {
         try {
-            const result = await this.productsService.getById(request.params.id);
+            const result = await this.productsService.getById(Number(request.params.id));
             return response.send(result);
 
-        } catch (error) {
+        } catch (error: any) {
             return response.status(400).json({
                 message: error.message || 'Unexpected error.'
             })

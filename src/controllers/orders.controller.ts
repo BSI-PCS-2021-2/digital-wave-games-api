@@ -1,9 +1,9 @@
 import { Response, Request } from 'express';
-import { OrdersService } from '../services';
+import { OrdersService, OrderItemsService } from '../services';
 
 export class OrdersController {
 
-    constructor(private ordersService: OrdersService) {}
+    constructor(private ordersService: OrdersService, private orderItemsService) {}
 
     async getOrder(request: Request, response: Response): Promise<Response> {
 
@@ -20,14 +20,14 @@ export class OrdersController {
     }
 
     async post(request: Request, response: Response): Promise<Response> {
-        console.log('entrei controller')
         const {
             totalPrice,
             totalWeight,
             expectedDeliveryDate,
             purchaseDate,
             paymentType,
-            userClientId
+            userClientId,
+            orderItems
          } = request.body;
 
         try {
@@ -38,7 +38,8 @@ export class OrdersController {
                 expectedDeliveryDate: expectedDeliveryDate,
                 purchaseDate: purchaseDate,
                 paymentType: paymentType,
-                userClientId: userClientId
+                userClientId: userClientId,
+                orderItems: orderItems
             });
 
             return response.send(result);
@@ -48,6 +49,19 @@ export class OrdersController {
                 message: error.message || 'Unexpected error.'
             })
         }
+    }
 
+    async getOrderItems(request: Request, response: Response): Promise<Response> {
+
+        try {
+
+            const result = await this.orderItemsService.getOrderItemsByOrder(request.params.order_id);
+            return response.send(result);
+
+        } catch (error) {
+            return response.status(400).json({
+                message: error.message || 'Unexpected error.'
+            })
+        }
     }
 }

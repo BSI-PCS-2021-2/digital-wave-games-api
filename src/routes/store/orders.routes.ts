@@ -10,8 +10,11 @@ router.get('/order/:order_id', (request, response) => {
 });
 
 router.post('/order', (request, response) => {
-  console.log('entrei')
     return ordersController.post(request, response);
+});
+
+router.get('/order/:order_id/items', (request, response) => {
+    return ordersController.getOrderItems(request, response);
 });
 
 

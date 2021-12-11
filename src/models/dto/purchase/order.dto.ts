@@ -1,3 +1,5 @@
+import { PostOrderItemDTO } from './orderItem.dto';
+
 export class OrderDTO {
     public totalPrice: number;
     public totalWeight: number;
@@ -5,4 +7,5 @@ export class OrderDTO {
     public purchaseDate: Date;
     public paymentType: string;
     public userClientId: number;
+    public orderItems: PostOrderItemDTO[];
 }

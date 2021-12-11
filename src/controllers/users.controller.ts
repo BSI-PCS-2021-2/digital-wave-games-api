@@ -3,7 +3,8 @@ import { UsersService, OrdersService } from '../services';
 
 export class UsersController {
 
-    constructor(private usersService: UsersService, private ordersService: OrdersService) {}
+    constructor(private usersService: UsersService,
+                private ordersService: OrdersService) {}
 
     async get(request: Request, response: Response): Promise<Response> {
 
@@ -18,42 +19,12 @@ export class UsersController {
                 message: error.message || 'Unexpected error.'
             })
         }
-
     }
 
     async getByUsername(request: Request, response: Response): Promise<Response> {
         try {
             const result = await this.usersService.getByUsername(request.params.username);
 
-            return response.send(result);
-
-        } catch (error) {
-            return response.status(400).json({
-                message: error.message || 'Unexpected error.'
-            })
-        }
-
-    }
-
-    async getOrders(request: Request, response: Response): Promise<Response> {
-
-        try {
-            const result = await this.ordersService.getOrdersByClient(request.params.client_id);
-            return response.send(result);
-
-        } catch (error) {
-            return response.status(400).json({
-                message: error.message || 'Unexpected error.'
-            })
-        }
-
-    }
-
-    async getOrder(request: Request, response: Response): Promise<Response> {
-
-        try {
-
-            const result = await this.ordersService.getOrderByClient(request.params.client_id, request.params.order_id);
             return response.send(result);
 
         } catch (error) {
@@ -113,5 +84,19 @@ export class UsersController {
             })
         }
 
+    }
+
+
+    async getOrdersByClient(request: Request, response: Response): Promise<Response> {
+
+        try {
+            const result = await this.ordersService.getOrdersByClient(request.params.client_id);
+            return response.send(result);
+
+        } catch (error) {
+            return response.status(400).json({
+                message: error.message || 'Unexpected error.'
+            })
+        }
     }
 }

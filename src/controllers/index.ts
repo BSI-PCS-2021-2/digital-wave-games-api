@@ -1,5 +1,6 @@
 import { UsersController } from './users.controller';
 import { ProductsController } from './products.controller';
+import { OrdersController } from './orders.controller';
 import { UsersRepository, AddressesRepository, ProductsRepository, OrdersRepository } from '../repositories';
 import { UsersService, ProductsService, OrdersService } from '../services';
 
@@ -14,7 +15,8 @@ const ordersService = new OrdersService(ordersRepository);
 
 const usersController = new UsersController(usersService, ordersService);
 const productsController = new ProductsController(productsService);
+const ordersController = new OrdersController(ordersService);
 
 
 
-export { usersService, usersController, productsService, productsController, ordersService }
+export { usersService, usersController, productsService, productsController, ordersService, ordersController }

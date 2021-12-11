@@ -1,4 +1,4 @@
-import { Order } from '../models';
+import { Order, PostOrderDTO } from '../models';
 import { IOrdersRepository } from '../interfaces';
 import logger from '../utils/logger';
 
@@ -18,10 +18,23 @@ export class OrdersService {
 
     }
 
-    async getOrderByClient(clientId: number, orderId: number): Promise<Order[]> {
+    async getOrder(orderId: number): Promise<Order[]> {
 
         try {
-            const response = await this.ordersRepository.getOrderByClient(clientId, orderId);
+            const response = await this.ordersRepository.getOrder(orderId);
+            return response;
+
+        } catch (error) {
+            logger.error(error);
+            throw new Error(error);
+        }
+    }
+
+    async post(postOrderDTO: PostOrderDTO): Promise<number[]> {
+        console.log('entrei service')
+        try {
+
+            const response: number[] = await this.ordersRepository.postOrder(postOrderDTO);
             return response;
 
         } catch (error) {
@@ -29,18 +42,5 @@ export class OrdersService {
             throw new Error(error);
         }
 
-    }
-
-
-    async getById(id: number): Promise<Order> {
-
-        try {
-            const response = await this.ordersRepository.getById(id);
-
-            return response;
-
-        } catch (error) {
-            throw new Error(error);
-        }
     }
 }

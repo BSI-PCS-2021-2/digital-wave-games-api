@@ -1,12 +1,10 @@
-import { Order } from '../models';
+import { Order, PostOrderDTO } from '../models';
 
 export interface IOrderRepository {
 
-    getOrders(): Promise<Order[]>;
-    getById(id: number): Promise<Order>;
-    getOrdersByClient(clientId: number);
-    getOrderByClient(clientId: number, orderId: number)
-    // postOrder();
-    
+    getOrdersByClient(clientId: number): Promise<Order[]>;
+    getOrder(id: number): Promise<Order>;
+    postOrder(postOrderDTO: PostOrderDTO): Promise<number>;
+
 
 }

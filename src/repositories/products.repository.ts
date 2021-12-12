@@ -15,7 +15,6 @@ export class ProductsRepository implements IProductsRepository {
       try {
           await mysqlDatabase.default.raw(sql).then(data => {
               if (data[0].length > 0) {
-                console.log(data[0]);
                 data[0].forEach((product: any) => {
 
                     products.push({
@@ -59,7 +58,6 @@ export class ProductsRepository implements IProductsRepository {
         try {
             await mysqlDatabase.default.raw(sql, [id || null]).then(data => {
                 if (data[0].length > 0) {
-                    console.log(data[0]);
                     data[0].forEach(result => {
 
                     product = {

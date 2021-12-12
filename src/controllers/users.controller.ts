@@ -1,10 +1,11 @@
 import { Response, Request } from 'express';
-import { UsersService, OrdersService } from '../services';
+import { UsersService, OrdersService, CartsService } from '../services';
 
 export class UsersController {
 
     constructor(private usersService: UsersService,
-                private ordersService: OrdersService) {}
+                private ordersService: OrdersService,
+                private cartsService: CartsService) {}
 
     async get(request: Request, response: Response): Promise<Response> {
 
@@ -76,10 +77,24 @@ export class UsersController {
     }
 
 
-    async getOrdersByClient(request: Request, response: Response): Promise<Response> {
+    async getOrders(request: Request, response: Response): Promise<Response> {
 
         try {
             const result = await this.ordersService.getOrdersByClient(request.params.client_id);
+            return response.send(result);
+
+        } catch (error) {
+            return response.status(400).json({
+                message: error.message || 'Unexpected error.'
+            })
+        }
+    }
+
+    async getCart(request: Request, response: Response): Promise<Response> {
+
+        try {
+            console.log('entrei controller')
+            const result = await this.cartsService.getCartByClient(request.params.client_id);
             return response.send(result);
 
         } catch (error) {

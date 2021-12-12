@@ -1,7 +1,8 @@
 import { UsersController,  } from './users.controller';
 import { ProductsController } from './products.controller';
 import { ConfirmationCodesController } from './confirmationCodesController';
-import { UsersRepository, AddressesRepository, ProductsRepository, ConfirmationCodesRepository } from '../repositories';
+import { OrdersController } from './orders.controller';
+import { UsersRepository, AddressesRepository, ProductsRepository, ConfirmationCodesRepository, OrdersRepository, OrderItemsRepository } from '../repositories';
 import { UsersService, ProductsService, ConfirmationCodesService,  OrdersService, OrderItemsService } from '../services';
 
 const usersRepository = new UsersRepository();
@@ -20,6 +21,7 @@ const orderItemsService = new OrderItemsService(orderItemsRepository);
 const usersController = new UsersController(usersService, ordersService);
 const productsController = new ProductsController(productsService);
 const confirmationCodesController = new ConfirmationCodesController(confirmationCodesService);
+const ordersController = new OrdersController(ordersService, orderItemsService);
 
 
 

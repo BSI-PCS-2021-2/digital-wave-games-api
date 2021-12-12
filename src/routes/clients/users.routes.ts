@@ -12,6 +12,10 @@ router.get('/user/:username', (request, response) => {
     return usersController.getByUsername(request, response);
 });
 
+router.get('/user/:client_id/orders', (request, response) => {
+    return usersController.getOrdersByClient(request, response);
+});
+
 router.post('/users', (request, response) => {
     return usersController.post(request, response);
 });

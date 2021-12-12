@@ -14,4 +14,4 @@ http://localhost:3006/store/order POST
 
 http://localhost:3006/store/order/{id}/items GET
 
-http://localhost:3006/clients/user/{id}/orders POST
+http://localhost:3006/clients/user/{id}/orders GET

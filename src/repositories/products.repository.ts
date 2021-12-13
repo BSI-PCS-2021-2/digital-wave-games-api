@@ -57,7 +57,7 @@ export class ProductsRepository implements IProductsRepository {
         try {
             await mysqlDatabase.default.raw(sql, [id || null]).then(data => {
                 if (data[0].length > 0) {
-                    data[0].forEach(result => {
+                    data[0].forEach((result: any) => {
 
                     product = {
                       id: result['id'],

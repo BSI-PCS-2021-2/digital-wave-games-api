@@ -5,3 +5,4 @@ export { ConfirmationCodesRepository } from './confirmationCodes.repository';
 export { OrdersRepository } from './orders.repository';
 export { OrderItemsRepository } from './orderItems.repository';
 export { CartsRepository } from './carts.repository';
+export { CartItemsRepository } from './cartItems.repository';

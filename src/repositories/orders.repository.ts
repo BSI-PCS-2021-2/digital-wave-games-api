@@ -1,10 +1,11 @@
-// import { knex } from '../../../database/index';
 import { IOrdersRepository } from '../interfaces';
 import { Order, PostOrderDTO } from '../models';
 import { mysqlDatabase } from '../databases';
 import logger from '../utils/logger';
 
 export class OrdersRepository implements IOrdersRepository {
+
+    
 
     async getOrdersByClient(clientId: number): Promise<Order[]> {
       let orders: Order[] = [];
@@ -15,7 +16,7 @@ export class OrdersRepository implements IOrdersRepository {
           await mysqlDatabase.default.raw(sql, [clientId || null]).then(data => {
               if (data[0].length > 0) {
                 console.log(data[0]);
-                data[0].forEach(result => {
+                data[0].forEach((result: any) => {
                     orders.push({
                         id: result['id'],
                         totalPrice: result['preco_total'],
@@ -34,7 +35,7 @@ export class OrdersRepository implements IOrdersRepository {
               throw new Error(err);
           });
 
-      } catch (error) {
+      } catch (error: any) {
           logger.error(error);
           throw new Error(error);
       }
@@ -43,15 +44,16 @@ export class OrdersRepository implements IOrdersRepository {
 
     }
 
-    async getOrder(id: number): Promise<Order> {
+    async getOrder(id: number): Promise<Order | null> {
 
-        let order: Order = null;
+        let order: Order | null = null;
 
         const sql = `SELECT * FROM pedido where id=?`;
+
         try {
             await mysqlDatabase.default.raw(sql, [id || null]).then(data => {
                 if (data[0].length > 0) {
-                    data[0].forEach(result => {
+                    data[0].forEach((result: any) => {
 
                     order = {
                       id: result['id'],
@@ -71,7 +73,7 @@ export class OrdersRepository implements IOrdersRepository {
                 throw new Error(err);
             });
 
-        } catch (error) {
+        } catch (error: any) {
             logger.error(error);
             throw new Error(error);
         }
@@ -104,7 +106,7 @@ export class OrdersRepository implements IOrdersRepository {
                 throw new Error(err);
             });
 
-        } catch (error) {
+        } catch (error: any) {
             logger.error(error);
             throw new Error(error);
         }

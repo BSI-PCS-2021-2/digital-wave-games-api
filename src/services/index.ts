@@ -5,3 +5,4 @@ export { AuthenticationService } from './authentication.service';
 export { OrdersService } from './orders.service';
 export { OrderItemsService } from './orderItems.service';
 export { CartsService } from './carts.service';
+export { CartItemsService } from './cartItems.service';

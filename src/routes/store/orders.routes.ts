@@ -10,7 +10,7 @@ router.get('/order/:order_id', (request, response) => {
 });
 
 router.post('/order', (request, response) => {
-    return ordersController.post(request, response);
+    return ordersController.postOrder(request, response);
 });
 
 router.get('/order/:order_id/items', (request, response) => {

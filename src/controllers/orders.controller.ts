@@ -3,23 +3,23 @@ import { OrdersService, OrderItemsService } from '../services';
 
 export class OrdersController {
 
-    constructor(private ordersService: OrdersService, private orderItemsService) {}
+    constructor(private ordersService: OrdersService, private orderItemsService: OrderItemsService) {}
 
     async getOrder(request: Request, response: Response): Promise<Response> {
 
         try {
 
-            const result = await this.ordersService.getOrder(request.params.order_id);
+            const result = await this.ordersService.getOrder(parseInt(request.params.order_id));
             return response.send(result);
 
-        } catch (error) {
+        } catch (error: any) {
             return response.status(400).json({
                 message: error.message || 'Unexpected error.'
             })
         }
     }
 
-    async post(request: Request, response: Response): Promise<Response> {
+    async postOrder(request: Request, response: Response): Promise<Response> {
         const {
             totalPrice,
             totalWeight,
@@ -32,7 +32,7 @@ export class OrdersController {
 
         try {
 
-            const result = await this.ordersService.post({
+            const result = await this.ordersService.postOrder({
                 totalPrice: totalPrice,
                 totalWeight: totalWeight,
                 expectedDeliveryDate: expectedDeliveryDate,
@@ -44,7 +44,7 @@ export class OrdersController {
 
             return response.send(result);
 
-        } catch (error) {
+        } catch (error: any) {
             return response.status(400).json({
                 message: error.message || 'Unexpected error.'
             })
@@ -55,10 +55,10 @@ export class OrdersController {
 
         try {
 
-            const result = await this.orderItemsService.getOrderItemsByOrder(request.params.order_id);
+            const result = await this.orderItemsService.getOrderItemsByOrder(parseInt(request.params.order_id));
             return response.send(result);
 
-        } catch (error) {
+        } catch (error: any) {
             return response.status(400).json({
                 message: error.message || 'Unexpected error.'
             })

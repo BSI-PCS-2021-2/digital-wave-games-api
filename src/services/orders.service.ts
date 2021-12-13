@@ -1,4 +1,4 @@
-import { Order, PostOrderDTO, PostOrderItemDTO } from '../models';
+import { Order, PostOrderDTO } from '../models';
 import { IOrdersRepository, IOrderItemsRepository } from '../interfaces';
 import logger from '../utils/logger';
 
@@ -11,27 +11,27 @@ export class OrdersService {
             const response = await this.ordersRepository.getOrdersByClient(clientId);
             return response;
 
-        } catch (error) {
+        } catch (error: any) {
             logger.error(error);
             throw new Error(error);
         }
 
     }
 
-    async getOrder(orderId: number): Promise<Order[]> {
+    async getOrder(orderId: number): Promise<Order | null> {
 
         try {
             const response = await this.ordersRepository.getOrder(orderId);
             return response;
 
 
-        } catch (error) {
+        } catch (error: any) {
             logger.error(error);
             throw new Error(error);
         }
     }
 
-    async post(postOrderDTO: PostOrderDTO): Promise<number[]> {
+    async postOrder(postOrderDTO: PostOrderDTO): Promise<number[]> {
         try {
 
             const response: number[] = await this.ordersRepository.postOrder(postOrderDTO);
@@ -40,13 +40,12 @@ export class OrdersService {
 
               postOrderItemDTO.orderId = response[0];
 
-              console.log(postOrderItemDTO.orderId)
               this.orderItemsRepository.postOrderItem(postOrderItemDTO);
             });
 
             return response;
 
-        } catch (error) {
+        } catch (error: any) {
             logger.error(error);
             throw new Error(error);
         }

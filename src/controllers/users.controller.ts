@@ -80,24 +80,10 @@ export class UsersController {
     async getOrders(request: Request, response: Response): Promise<Response> {
 
         try {
-            const result = await this.ordersService.getOrdersByClient(request.params.client_id);
+            const result = await this.ordersService.getOrdersByClient(parseInt(request.params.client_id));
             return response.send(result);
 
-        } catch (error) {
-            return response.status(400).json({
-                message: error.message || 'Unexpected error.'
-            })
-        }
-    }
-
-    async getCart(request: Request, response: Response): Promise<Response> {
-
-        try {
-            console.log('entrei controller')
-            const result = await this.cartsService.getCartByClient(request.params.client_id);
-            return response.send(result);
-
-        } catch (error) {
+        } catch (error: any) {
             return response.status(400).json({
                 message: error.message || 'Unexpected error.'
             })

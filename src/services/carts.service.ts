@@ -1,4 +1,4 @@
-import { Cart, PostCartDTO, PutCartDTO } from '../models';
+import { PostCartDTO, PostCartItemDTO } from '../models';
 import { ICartsRepository } from '../interfaces';
 import logger from '../utils/logger';
 
@@ -6,16 +6,8 @@ export class CartsService {
 
     constructor(private cartsRepository: ICartsRepository) { }
 
-    async getCartByClient(clientId: number): Promise<Cart> {
+    // async postCart(postCartItemDTO: PostCartItemDTO): Promise<number[]> {
 
-        try {
-            console.log('entrei service')
-            const response = await this.cartsRepository.getCartByClient(clientId);
-
-            return response;
-
-        } catch (error) {
-            throw new Error(error);
-        }
-    }
+    // // TODO
+    // }
 }

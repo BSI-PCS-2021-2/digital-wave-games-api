@@ -17,9 +17,23 @@ export class UsersService {
     async get(): Promise<User[]> {
 
         try {
-            
+
             const response = await this.usersRepository.getUsers();
-            
+
+            return response;
+
+        } catch (error) {
+            logger.error(error);
+            throw new Error(error);
+        }
+
+    }
+
+    async getByUsername(username: string): Promise<User> {
+        try {
+
+            const response = await this.usersRepository.getUser(username);
+
             return response;
 
         } catch (error: any) {
@@ -45,7 +59,7 @@ export class UsersService {
             }
 
             postUserDTO.password = sha256(postUserDTO.password + ENCRYPTION_SECRET).toString();
-            
+
             const response: number[] = await this.usersRepository.postUser(postUserDTO);
 
             let address: PostAddressDTO = {
@@ -60,7 +74,7 @@ export class UsersService {
             }
 
             await this.addressesRepository.postAddress(address);
-            
+
             return response;
 
         } catch (error: any) {

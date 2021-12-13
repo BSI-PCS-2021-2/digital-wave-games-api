@@ -19,6 +19,17 @@ export class ProductsRepository implements IProductsRepository {
                     products.push({
                         id: product['id'],
                         name: product['nome'],
+                        price: product['preco'],
+                        amount: product['quantidade'],
+                        rating: product['avaliacao'],
+                        description: product['descricao'],
+                        weight: product['peso'],
+                        height: product['altura'],
+                        deeph: product['profundidade'],
+                        releaseDate: product['data_lancamento'],
+                        genderId: product['id_genero'],
+                        platformId: product['id_plataforma'],
+                        ratingSystemId: product['id_classificacao_indicativa'],
                     });
 
                 });
@@ -46,8 +57,25 @@ export class ProductsRepository implements IProductsRepository {
         try {
             await mysqlDatabase.default.raw(sql, [id || null]).then(data => {
                 if (data[0].length > 0) {
-                        product = data[0];
-                        // criar novo objeto com as colunas
+                    data[0].forEach(result => {
+
+                    product = {
+                      id: result['id'],
+                      name: result['nome'],
+                      price: result['preco'],
+                      amount: result['quantidade'],
+                      rating: result['avaliacao'],
+                      description: result['descricao'],
+                      weight: result['peso'],
+                      height: result['altura'],
+                      deeph: result['profundidade'],
+                      releaseDate: result['data_lancamento'],
+                      genderId: result['id_genero'],
+                      platformId: result['id_plataforma'],
+                      ratingSystemId: result['id_classificacao_indicativa'],
+                    };
+
+                  });
                 }
 
             }).catch(err => {

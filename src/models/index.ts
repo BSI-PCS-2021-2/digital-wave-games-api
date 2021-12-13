@@ -5,3 +5,5 @@ export { PostAddressDTO } from './dto/users/postAddress.dto';
 export { Product } from './entities/product.model';
 export { PostSignInDTO } from './dto/auth/postSignIn.dto';
 export { Jwt } from './entities/jwt.model';
+export { Order } from './entities/order.model';
+export { OrderItem } from './entities/orderItem.model';

@@ -1,9 +1,11 @@
 import { Response, Request } from 'express';
-import { UsersService } from '../services';
+import { UsersService, OrdersService, CartsService } from '../services';
 
 export class UsersController {
 
-    constructor(private usersService: UsersService) {}
+    constructor(private usersService: UsersService,
+                private ordersService: OrdersService,
+                private cartsService: CartsService) {}
 
     async get(request: Request, response: Response): Promise<Response> {
 
@@ -12,7 +14,7 @@ export class UsersController {
             const result = await this.usersService.get();
 
             return response.send(result);
-            
+
         } catch (error: any) {
             return response.status(400).json({
                 message: error.message || 'Unexpected error.'
@@ -21,9 +23,10 @@ export class UsersController {
 
     }
 
+
     async post(request: Request, response: Response): Promise<Response> {
 
-        const { 
+        const {
             email,
             username,
             name,
@@ -64,12 +67,40 @@ export class UsersController {
             });
 
             return response.send(result);
-            
+
         } catch (error: any) {
             return response.status(400).json({
                 message: error.message || 'Unexpected error.'
             })
         }
 
+    }
+
+
+    async getOrders(request: Request, response: Response): Promise<Response> {
+
+        try {
+            const result = await this.ordersService.getOrdersByClient(request.params.client_id);
+            return response.send(result);
+
+        } catch (error) {
+            return response.status(400).json({
+                message: error.message || 'Unexpected error.'
+            })
+        }
+    }
+
+    async getCart(request: Request, response: Response): Promise<Response> {
+
+        try {
+            console.log('entrei controller')
+            const result = await this.cartsService.getCartByClient(request.params.client_id);
+            return response.send(result);
+
+        } catch (error) {
+            return response.status(400).json({
+                message: error.message || 'Unexpected error.'
+            })
+        }
     }
 }

@@ -1,4 +1,3 @@
-// import { knex } from '../../../database/index';
 import { IConfirmationCodesRepository } from '../interfaces';
 import { PostConfirmationCodesDTO } from '../models';
 import { mysqlDatabase } from '../databases';

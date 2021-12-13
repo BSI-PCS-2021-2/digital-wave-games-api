@@ -22,14 +22,14 @@ export class UsersService {
 
             return response;
 
-        } catch (error) {
+        } catch (error: any) {
             logger.error(error);
             throw new Error(error);
         }
 
     }
 
-    async getByUsername(username: string): Promise<User> {
+    async getByUsername(username: string): Promise<User | null> {
         try {
 
             const response = await this.usersRepository.getUser(username);

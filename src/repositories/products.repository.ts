@@ -1,4 +1,3 @@
-// import { knex } from '../../../database/index';
 import { IProductsRepository } from '../interfaces';
 import { Product } from '../models';
 import { mysqlDatabase } from '../databases';

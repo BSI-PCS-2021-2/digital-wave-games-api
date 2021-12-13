@@ -24,7 +24,6 @@ export class ProductsService {
     async getById(id: number): Promise<Product | null> {
 
         try {
-            console.log(id);
             const response = await this.productsRepository.getById(id);
 
             return response;

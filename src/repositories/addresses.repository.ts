@@ -1,4 +1,3 @@
-// import { knex } from '../../../database/index';
 import { IAddressesRepository } from '../interfaces';
 import { PostAddressDTO } from '../models';
 import { mysqlDatabase } from '../databases';

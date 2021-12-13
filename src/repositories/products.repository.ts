@@ -1,4 +1,3 @@
-// import { knex } from '../../../database/index';
 import { IProductsRepository } from '../interfaces';
 import { Product } from '../models';
 import { mysqlDatabase } from '../databases';
@@ -14,9 +13,7 @@ export class ProductsRepository implements IProductsRepository {
 
       try {
           await mysqlDatabase.default.raw(sql).then(data => {
-              console.log(data);
               if (data[0].length > 0) {
-                console.log(data[0]);
                 data[0].forEach((product: any) => {
 
                     products.push({

@@ -1,6 +1,8 @@
 export { User } from './entities/user.model';
 export { PostUserDTO } from './dto/users/postUser.dto';
+export { PatchUserDTO } from './dto/users/patchUser.dto';
 export { PostConfirmationCodesDTO } from './dto/users/postConfirmationCodes.dto';
+export { PostPasswordRecoveryCodesDTO } from './dto/users/postPasswordRecoveryCodes.dto';
 export { PostAddressDTO } from './dto/users/postAddress.dto';
 export { PostCartDTO } from './dto/purchase/postCart.dto';
 export { PutCartItemDTO } from './dto/purchase/putCartItem.dto'

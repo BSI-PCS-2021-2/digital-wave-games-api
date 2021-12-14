@@ -19,7 +19,7 @@ export class OrderItemsService {
     }
 
 
-    async getOrderItem(id: number): Promise<OrderItem> {
+    async getOrderItem(id: number): Promise<OrderItem | null> {
 
         try {
             const response = await this.orderItemsRepository.getOrderItem(id);

@@ -23,6 +23,22 @@ export class UsersController {
 
     }
 
+    async getByUsername(request: Request, response: Response): Promise<Response> {
+
+        try {
+
+            const result = await this.usersService.getByUsername(request.params.username);
+
+            return response.send(result);
+
+        } catch (error: any) {
+            return response.status(400).json({
+                message: error.message || 'Unexpected error.'
+            })
+        }
+
+    }
+
 
     async post(request: Request, response: Response): Promise<Response> {
 

@@ -37,17 +37,17 @@ export class CartItemsRepository implements ICartItemsRepository{
     return cartItems;
   }
 
-  // postCartItem(postCartDTO: PostCartItemDTO): Promise<number[]> {
-  //  //TODO
-  // }
+  postCartItem(postCartDTO: PostCartItemDTO): Promise<number[]> | null {
+    return null;
+  }
 
-  // putCartItem(putCartDTO: PutCartItemDTO): Promise<number> {
-  //  //TODO
-  // }
+  putCartItem(putCartDTO: PutCartItemDTO): Promise<number> | null {
+    return null;
+  }
 
-  // deleteCartItem(cartItemId: number): Promise<boolean> {
-  //   // TODO 
-  // }
+  deleteCartItem(cartItemId: number): Promise<boolean> | null {
+    return null;
+  }
  
 
 

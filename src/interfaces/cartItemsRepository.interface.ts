@@ -5,7 +5,7 @@ import { PutCartItemDTO } from "../models";
 export interface ICartItemsRepository {
 
   getCartItemsByCart(cartId: number): Promise<CartItem[]>;
-  postCartItem(postCartDTO: PostCartItemDTO): Promise<number[]>;
-  putCartItem(putCartDTO: PutCartItemDTO): Promise<number>;
-  deleteCartItem(cartItemId: number): Promise<boolean>;
+  postCartItem(postCartDTO: PostCartItemDTO): Promise<number[]> | null;
+  putCartItem(putCartDTO: PutCartItemDTO): Promise<number> | null;
+  deleteCartItem(cartItemId: number): Promise<boolean> | null;
 }

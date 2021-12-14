@@ -7,8 +7,8 @@ export class CartsRepository implements ICartsRepository{
 
   //postCart(postCartDTO: PostCartDTO): Promise<number[]>;
 
-  // postCart(postCartDTO: PostCartDTO): Promise<number[]> {
-  //  // TODO 
-  // }
+  postCart(postCartDTO: PostCartDTO): Promise<number[]> | null {
+    return null;
+  }
 
 }

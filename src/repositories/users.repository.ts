@@ -1,5 +1,5 @@
 import { IUsersRepository } from '../interfaces';
-import { PostUserDTO, User } from '../models';
+import { PatchUserDTO, PostUserDTO, User } from '../models';
 import { mysqlDatabase } from '../databases';
 import logger from '../utils/logger';
 
@@ -140,6 +140,36 @@ export class UsersRepository implements IUsersRepository {
             }
             ]).then( insertedIndex => {
                 index = insertedIndex;
+            })
+            .catch((error: any) => {
+                logger.error(error);
+                throw new Error(error);
+            });
+
+        } catch (error: any) {
+            logger.error(error);
+            throw new Error(error);
+        }
+
+        return index;
+
+    }
+
+    async patchUser(patchUserDTO: PatchUserDTO): Promise<number[]> {
+
+        let index: number[] = [];
+
+        try {
+
+            await mysqlDatabase
+            .default('usuario_cliente')
+            .returning('id')
+            .where({ id: patchUserDTO.id })
+            .update({
+                senha: patchUserDTO.password
+            })
+            .then( insertedIndex => {
+                index.push(insertedIndex);
             })
             .catch((error: any) => {
                 logger.error(error);

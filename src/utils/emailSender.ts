@@ -3,7 +3,7 @@ import logger from './logger';
 
 const nodemailer = require('nodemailer');
 
-export function sendEmail(to: string, subject: string, body: string) {
+export function sendEmail(to: string | undefined, subject: string, body: string) {
 
   const transporter = nodemailer.createTransport({
     service: EMAIL.EMAIL_SERVICE,

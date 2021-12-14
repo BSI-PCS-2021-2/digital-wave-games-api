@@ -14,7 +14,7 @@ export class OrderItemsRepository implements IOrderItemsRepository {
       try {
           await mysqlDatabase.default.raw(sql, [orderId || null]).then(data => {
               if (data[0].length > 0) {
-                data[0].forEach(result => {
+                data[0].forEach((result: any) => {
                     orderItems.push({
                       id: result['id'],
                       amount: result['quantidade'],
@@ -26,12 +26,12 @@ export class OrderItemsRepository implements IOrderItemsRepository {
                 });
               }
 
-          }).catch(err => {
-              logger.error(err);
-              throw new Error(err);
+          }).catch((error: any) => {
+              logger.error(error);
+              throw new Error(error);
           });
 
-      } catch (error) {
+      } catch (error: any) {
           logger.error(error);
           throw new Error(error);
       }
@@ -40,15 +40,15 @@ export class OrderItemsRepository implements IOrderItemsRepository {
 
     }
 
-    async getOrderItem(id: number): Promise<OrderItem> {
+    async getOrderItem(id: number): Promise<OrderItem | null> {
 
-        let orderItem: OrderItem = null;
+        let orderItem: OrderItem | null = null;
 
         const sql = `SELECT * FROM item_pedido where id=?`;
         try {
             await mysqlDatabase.default.raw(sql, [id || null]).then(data => {
                 if (data[0].length > 0) {
-                    data[0].forEach(result => {
+                    data[0].forEach((result: any) => {
 
                     orderItem = {
                       id: result['id'],
@@ -66,11 +66,11 @@ export class OrderItemsRepository implements IOrderItemsRepository {
                 throw new Error(err);
             });
 
-        } catch (error) {
+        } catch (error: any) {
             logger.error(error);
             throw new Error(error);
         }
-        return orderItemItem;
+        return orderItem;
 
     }
 
@@ -98,7 +98,7 @@ export class OrderItemsRepository implements IOrderItemsRepository {
                 throw new Error(err);
             });
 
-        } catch (error) {
+        } catch (error: any) {
             logger.error(error);
             throw new Error(error);
         }

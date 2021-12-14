@@ -22,6 +22,22 @@ export class UsersController {
 
     }
 
+    async getByUsername(request: Request, response: Response): Promise<Response> {
+
+        try {
+
+            const result = await this.usersService.getByUsername(request.params.username);
+
+            return response.send(result);
+
+        } catch (error: any) {
+            return response.status(400).json({
+                message: error.message || 'Unexpected error.'
+            })
+        }
+
+    }
+
 
     async post(request: Request, response: Response): Promise<Response> {
 
@@ -75,6 +91,30 @@ export class UsersController {
 
     }
 
+    async patchByUsername(request: Request, response: Response): Promise<Response> {
+        const {
+            username,
+            password,
+            code
+         } = request.body;
+
+        try {
+
+            const result = await this.usersService.patch({
+                id: undefined,
+                username: username,
+                password: password,
+                code: code
+            });
+
+            return response.send(result);
+
+        } catch (error: any) {
+            return response.status(400).json({
+                message: error.message || 'Unexpected error.'
+            })
+        }
+    }
 
     async getOrders(request: Request, response: Response): Promise<Response> {
 

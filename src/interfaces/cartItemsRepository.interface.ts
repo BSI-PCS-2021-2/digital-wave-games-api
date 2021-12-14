@@ -6,6 +6,6 @@ export interface ICartItemsRepository {
 
   getCartItemsByCart(cartId: number): Promise<CartItem[]>;
   postCartItem(postCartDTO: PostCartItemDTO): Promise<number[]>;
-  putCartItem(putCartDTO: PutCartItemDTO): Promise<number>;
-  deleteCartItem(cartItemId: number): Promise<boolean>;
+  putCartItem(putCartDTO: PutCartItemDTO, cartItemId: number): Promise<number | null>;
+  deleteCartItem(cartItemId: number): Promise<void>;
 }

@@ -1,11 +1,10 @@
 import { Response, Request } from 'express';
-import { UsersService, OrdersService, CartsService } from '../services';
+import { UsersService, OrdersService } from '../services';
 
 export class UsersController {
 
     constructor(private usersService: UsersService,
-                private ordersService: OrdersService,
-                private cartsService: CartsService) {}
+                private ordersService: OrdersService) {}
 
     async get(request: Request, response: Response): Promise<Response> {
 

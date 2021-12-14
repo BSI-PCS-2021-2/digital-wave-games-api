@@ -4,12 +4,12 @@ import logger from '../utils/logger';
 
 export class CartItemsService {
 
-    constructor(private cartsRepository: ICartItemsRepository) { }
+    constructor(private cartItemsRepository: ICartItemsRepository) { }
 
     async getCartItemsByCart(cartId: number): Promise<CartItem[]> {
 
         try {
-            const response = await this.cartsRepository.getCartItemsByCart(cartId);
+            const response = await this.cartItemsRepository.getCartItemsByCart(cartId);
 
             return response;
 
@@ -18,13 +18,50 @@ export class CartItemsService {
         }
     }
 
-    // async postCartItem(postCartItemDTO: PostCartItemDTO): Promise<number[]> {
-    //     // TODO
+    async postCartItem(postCartItemDTO: PostCartItemDTO): Promise<number[]> {
 
-    // }
+       try {
 
-    // async putCartItem(postCartItemDTO: PostCartItemDTO): Promise<number[]> {
-    //     // TODO
+        const cartItem: PostCartItemDTO = {
+            cartId: postCartItemDTO.cartId,
+            productId: postCartItemDTO.productId,
+            amount: postCartItemDTO.amount
+        }
 
-    // }
+        return await this.cartItemsRepository.postCartItem(cartItem)
+       
+        } catch (error: any) {
+           logger.error(error);
+           throw Error(error);
+       }
+
+    }
+
+    async putCartItem(putCartItemDTO: PutCartItemDTO, cartItemId: number): Promise<number | null> {
+        try {
+
+        const cartItem: PutCartItemDTO = {
+            amount: putCartItemDTO.amount
+        }
+
+        return await this.cartItemsRepository.putCartItem(cartItem, cartItemId);
+       
+        } catch (error: any) {
+           logger.error(error);
+           throw Error(error);
+       }
+
+    }
+
+    async deleteCartItem(cartItemId: number): Promise<void> {
+        try {
+    
+            return await this.cartItemsRepository.deleteCartItem(cartItemId);
+           
+            } catch (error: any) {
+               logger.error(error);
+               throw Error(error);
+           }
+
+    }
 }

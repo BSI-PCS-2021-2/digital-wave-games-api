@@ -9,15 +9,11 @@ router.get('/users', (request, response) => {
 });
 
 router.get('/user/:username', (request, response) => {
-    return usersController.getByUsername(request, response);
+    return usersController.get(request, response);
 });
 
 router.get('/user/:client_id/orders', (request, response) => {
     return usersController.getOrders(request, response);
-});
-
-router.get('/user/:client_id/cart', (request, response) => {
-    return usersController.getCart(request, response);
 });
 
 router.post('/users', (request, response) => {

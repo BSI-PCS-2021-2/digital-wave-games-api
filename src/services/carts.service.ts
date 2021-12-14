@@ -1,4 +1,4 @@
-import { PostCartDTO, PostCartItemDTO } from '../models';
+import { PostCartDTO } from '../models';
 import { ICartsRepository } from '../interfaces';
 import logger from '../utils/logger';
 
@@ -6,8 +6,18 @@ export class CartsService {
 
     constructor(private cartsRepository: ICartsRepository) { }
 
-    // async postCart(postCartItemDTO: PostCartItemDTO): Promise<number[]> {
+    async postCart(postCartDTO: PostCartDTO): Promise<number[]> {
 
-    // // TODO
-    // }
+        try {
+
+            const response: number[] = await this.cartsRepository.postCart(postCartDTO);
+
+            return response;
+
+        } catch (error: any) {
+            logger.error(error);
+            throw new Error(error);
+        }
+        
+    }
 }

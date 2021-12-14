@@ -5,10 +5,32 @@ import logger from '../utils/logger';
 
 export class CartsRepository implements ICartsRepository{
 
-  //postCart(postCartDTO: PostCartDTO): Promise<number[]>;
+  async postCart(postCartDTO: PostCartDTO): Promise<number[]> {
 
-  // postCart(postCartDTO: PostCartDTO): Promise<number[]> {
-  //  // TODO 
-  // }
+    let index: number[] = [];
+
+    try {
+
+        await mysqlDatabase
+        .default('carrinho')
+        .returning('id')
+        .insert([{
+            id_cliente: postCartDTO.clientId || null,
+        }
+        ]).then( insertedIndex => {
+            index = insertedIndex;
+        })
+        .catch((error: any) => {
+            logger.error(error);
+            throw new Error(error);
+        });
+
+    } catch (error: any) {
+        logger.error(error);
+        throw new Error(error);
+    }
+
+    return index;
+  }
 
 }

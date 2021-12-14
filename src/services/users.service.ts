@@ -1,6 +1,6 @@
-import { PostAddressDTO, User } from '../models';
+import { PostAddressDTO, User, PostCartDTO } from '../models';
 import { PostUserDTO } from '../models';
-import { IUsersRepository, IAddressesRepository } from '../interfaces';
+import { IUsersRepository, IAddressesRepository, ICartsRepository } from '../interfaces';
 import { ENCRYPTION_SECRET } from '../utils/secrets';
 import logger from '../utils/logger';
 import { ConfirmationCodesRepository } from '../repositories/confirmationCodes.repository';
@@ -11,7 +11,8 @@ export class UsersService {
     constructor(
         private usersRepository: IUsersRepository,
         private addressesRepository: IAddressesRepository,
-        private confirmationCodesRepository: ConfirmationCodesRepository
+        private confirmationCodesRepository: ConfirmationCodesRepository,
+        private cartsRepository: ICartsRepository
         ) { }
 
     async get(): Promise<User[]> {
@@ -73,8 +74,13 @@ export class UsersService {
                 clientId: response[0]
             }
 
-            await this.addressesRepository.postAddress(address);
+            let cart: PostCartDTO = {
+                clientId: response[0]
+            }
 
+            await this.addressesRepository.postAddress(address);
+            await this.cartsRepository.postCart(cart);
+            
             return response;
 
         } catch (error: any) {

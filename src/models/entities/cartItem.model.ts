@@ -1,6 +1,6 @@
 export class CartItem {
+  public id?: number;
   public cartId?: number;
-  public clientId?: number;
   public productId?: number;
   public amount?: number;
 

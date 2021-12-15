@@ -29,7 +29,7 @@ const orderItemsService = new OrderItemsService(orderItemsRepository);
 const cartsService = new CartsService(cartsRepository);
 const cartItemsService = new CartItemsService(cartItemsRepository);
 
-const usersController = new UsersController(usersService, ordersService);
+const usersController = new UsersController(usersService, ordersService, cartsService);
 const productsController = new ProductsController(productsService);
 const confirmationCodesController = new ConfirmationCodesController(confirmationCodesService);
 const passwordRecoveryCodesController = new PasswordRecoveryCodesController(passwordRecoveryCodesService);

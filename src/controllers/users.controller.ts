@@ -1,10 +1,11 @@
 import { Response, Request } from 'express';
-import { UsersService, OrdersService } from '../services';
+import { UsersService, OrdersService, CartsService } from '../services';
 
 export class UsersController {
 
     constructor(private usersService: UsersService,
-                private ordersService: OrdersService) {}
+                private ordersService: OrdersService,
+                private cartsService: CartsService) {}
 
     async get(request: Request, response: Response): Promise<Response> {
 
@@ -37,6 +38,7 @@ export class UsersController {
         }
 
     }
+    
 
 
     async post(request: Request, response: Response): Promise<Response> {
@@ -127,5 +129,19 @@ export class UsersController {
                 message: error.message || 'Unexpected error.'
             })
         }
+    }
+
+    async getCart(request: Request, response: Response): Promise<Response> {
+
+        try {
+            const result = await this.cartsService.getCartByClient(parseInt(request.params.client_id));
+            return response.send(result);
+
+        } catch (error: any) {
+            return response.status(400).json({
+                message: error.message || 'Unexpected error.'
+            })
+        }
+
     }
 }

@@ -5,6 +5,7 @@ export class CartsController {
 
     constructor(private cartsService: CartsService, private cartItemsService: CartItemsService) {}
 
+    
     async getCartItems(request: Request, response: Response): Promise<Response> {
 
         try {
@@ -40,6 +41,7 @@ export class CartsController {
     }
 
     async postCartItem(request: Request, response: Response): Promise<Response> {
+        console.log("controller")
         const {
             cartId,
             productId,

@@ -6,11 +6,11 @@ export class CartsService {
 
     constructor(private cartsRepository: ICartsRepository) { }
 
-    async postCart(postCartDTO: PostCartDTO): Promise<number[]> {
+    async postCart(postCartDTO: PostCartDTO): Promise<number[] | null> {
 
         try {
 
-            const response: number[] = await this.cartsRepository.postCart(postCartDTO);
+            const response: number[] | null = await this.cartsRepository.postCart(postCartDTO);
 
             return response;
 

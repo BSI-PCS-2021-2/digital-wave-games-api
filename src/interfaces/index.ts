@@ -7,3 +7,4 @@ export { IOrdersRepository } from './ordersRepository.interface';
 export { IOrderItemsRepository } from './orderItemsRepository.interface';
 export { ICartsRepository } from './cartsRepository.interface';
 export { ICartItemsRepository } from './cartItemsRepository.interface';
+export { IWalletsRepository } from './walletsRepository.interface';

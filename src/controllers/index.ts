@@ -5,9 +5,11 @@ import { ConfirmationCodesController } from './confirmationCodes.controller';
 import { AuthenticationController } from './authentication.controller';
 import { OrdersController } from './orders.controller';
 import { CartsController } from './carts.controller';
+import { WalletsController } from './wallets.controller';
 
-import { UsersRepository, AddressesRepository, ProductsRepository, OrdersRepository, OrderItemsRepository, CartsRepository, CartItemsRepository, ConfirmationCodesRepository, PasswordRecoveryCodesRepository } from '../repositories';
-import { UsersService, ProductsService, ConfirmationCodesService, AuthenticationService, OrdersService, OrderItemsService, CartsService, CartItemsService, PasswordRecoveryCodesService } from '../services';
+import { UsersRepository, AddressesRepository, ProductsRepository, OrdersRepository, OrderItemsRepository, CartsRepository, CartItemsRepository, ConfirmationCodesRepository, PasswordRecoveryCodesRepository, WalletsRepository } from '../repositories';
+import { UsersService, ProductsService, ConfirmationCodesService, AuthenticationService, OrdersService, OrderItemsService, CartsService, CartItemsService, PasswordRecoveryCodesService, WalletsService } from '../services';
+
 
 const usersRepository = new UsersRepository();
 const productsRepository = new ProductsRepository();
@@ -18,6 +20,7 @@ const ordersRepository = new OrdersRepository();
 const orderItemsRepository = new OrderItemsRepository();
 const cartsRepository = new CartsRepository();
 const cartItemsRepository = new CartItemsRepository();
+const walletsRepository = new WalletsRepository();
 
 const usersService = new UsersService(usersRepository, addressesRepository, confirmationCodesRepository, cartsRepository, passwordRecoveryCodesRepository);
 const productsService = new ProductsService(productsRepository);
@@ -28,6 +31,7 @@ const ordersService = new OrdersService(ordersRepository, orderItemsRepository);
 const orderItemsService = new OrderItemsService(orderItemsRepository);
 const cartsService = new CartsService(cartsRepository);
 const cartItemsService = new CartItemsService(cartItemsRepository);
+const walletsService = new WalletsService(usersRepository, walletsRepository);
 
 const usersController = new UsersController(usersService, ordersService);
 const productsController = new ProductsController(productsService);
@@ -36,5 +40,6 @@ const passwordRecoveryCodesController = new PasswordRecoveryCodesController(pass
 const authenticationController = new AuthenticationController(authenticationService);
 const ordersController = new OrdersController(ordersService, orderItemsService);
 const cartsController = new CartsController(cartsService, cartItemsService);
+const walletsController = new WalletsController(walletsService);
 
-export { usersService, usersController, productsService, productsController, confirmationCodesController, passwordRecoveryCodesController, authenticationController, ordersService, ordersController, orderItemsService, cartsService, cartItemsService, cartsController }
+export { walletsController, usersService, usersController, productsService, productsController, confirmationCodesController, passwordRecoveryCodesController, authenticationController, ordersService, ordersController, orderItemsService, cartsService, cartItemsService, cartsController }

@@ -16,5 +16,5 @@ export { Order } from './entities/order.model';
 export { OrderItem } from './entities/orderItem.model';
 export { CartItem } from './entities/cartItem.model';
 export { Wallet } from './entities/wallet.model';
-export { Cart } from './/entities/cart.model'
+export { Cart } from './entities/cart.model'
 

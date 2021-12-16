@@ -21,7 +21,6 @@ router.get('/user/:client_id/orders', (request, response) => {
 });
 
 router.get('/user/:client_id/cart', (request, response) => {
-    console.log("ENDPOING AQUI")
     return usersController.getCart(request, response);
 });
 

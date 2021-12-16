@@ -105,8 +105,6 @@ export class UsersService {
 
             const code = await this.passwordRecoveryCodesRepository.getCode(user.id);
 
-            console.log(patchUserDTO.code);
-            console.log(code);
 
             if (code !== patchUserDTO.code) {
                 return [-2];

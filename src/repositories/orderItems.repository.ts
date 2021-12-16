@@ -80,7 +80,6 @@ export class OrderItemsRepository implements IOrderItemsRepository {
         let index: number[] = [];
 
         try {
-            console.log('entrei repositorio')
             await mysqlDatabase
             .default('item_pedido')
             .returning('id')

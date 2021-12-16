@@ -41,7 +41,6 @@ export class CartsController {
     }
 
     async postCartItem(request: Request, response: Response): Promise<Response> {
-        console.log("controller")
         const {
             cartId,
             productId,

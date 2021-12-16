@@ -1,9 +1,41 @@
 import { ICartsRepository } from '../interfaces';
-import { PostCartDTO } from '../models';
+import { Cart, PostCartDTO } from '../models';
 import { mysqlDatabase } from '../databases';
 import logger from '../utils/logger';
 
 export class CartsRepository implements ICartsRepository{
+
+    async getCartByClient(clientId: number): Promise<Cart | null> {
+
+        let cart: Cart | null = null;
+
+        const sql = `SELECT * FROM carrinho where id_cliente=?`;
+        try {
+            await mysqlDatabase.default.raw(sql, [clientId || null]).then(data => {
+                if (data[0].length > 0) {
+                    data[0].forEach((result: any) => {
+
+                    cart = {
+                      id: result['id'],
+                      clientId: result['id_cliente']
+                    };
+                    console.log(cart);
+                  });
+                }
+
+            }).catch(err => {
+                logger.error(err);
+                throw new Error(err);
+            });
+
+        } catch (error: any) {
+            logger.error(error);
+            throw new Error(error);
+        }
+
+        return cart;
+
+    }
 
   async postCart(postCartDTO: PostCartDTO): Promise<number[]> {
 

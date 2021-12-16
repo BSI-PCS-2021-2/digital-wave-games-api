@@ -8,7 +8,8 @@ router.get('/cart/:cart_id/items', (request, response) => {
     return cartsController.getCartItems(request, response);
 });
 
-router.post('/cart/items/', (request, response) => {
+
+router.post('/cart/items', (request, response) => {
     return cartsController.postCartItem(request, response);
 });
 

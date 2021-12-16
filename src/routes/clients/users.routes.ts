@@ -20,6 +20,11 @@ router.get('/user/:client_id/orders', (request, response) => {
     return usersController.getOrders(request, response);
 });
 
+router.get('/user/:client_id/cart', (request, response) => {
+    console.log("ENDPOING AQUI")
+    return usersController.getCart(request, response);
+});
+
 router.post('/users', (request, response) => {
     return usersController.post(request, response);
 });

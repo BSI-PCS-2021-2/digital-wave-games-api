@@ -1,4 +1,4 @@
-import { Jwt, PostSignInDTO } from "../models";
+import { Jwt, PostSignInDTO, User } from "../models";
 import logger from "../utils/logger";
 import * as jsonwebtoken from 'jsonwebtoken';
 import { ENCRYPTION_SECRET, RSA_PRIVATE_KEY } from "../utils/secrets";
@@ -19,6 +19,7 @@ export class AuthenticationService {
         try {
 
             const dbPassword: string = await this.usersRepository.getUserPassword(username);
+            const user: User | null = await this.usersRepository.getUser(username);
 
             if (dbPassword === sha256(password + ENCRYPTION_SECRET).toString()) {
                 const jwtBearerToken = jsonwebtoken.sign({}, RSA_PRIVATE_KEY, {
@@ -26,11 +27,14 @@ export class AuthenticationService {
                     expiresIn: 86400, // um dia
                     subject: username
                 });
+                
+                
 
                 jwt = {
                     idToken: jwtBearerToken, 
                     expiresIn: 86400,
-                    username: username
+                    username: username,
+                    userId: user?.id
                 };
             }
 

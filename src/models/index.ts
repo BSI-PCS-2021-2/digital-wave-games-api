@@ -15,5 +15,6 @@ export { Jwt } from './entities/jwt.model';
 export { Order } from './entities/order.model';
 export { OrderItem } from './entities/orderItem.model';
 export { CartItem } from './entities/cartItem.model';
-export { Cart } from './/entities/cart.model'
+export { Wallet } from './entities/wallet.model';
+export { Cart } from './entities/cart.model'
 

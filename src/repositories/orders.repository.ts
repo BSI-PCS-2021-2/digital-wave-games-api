@@ -15,7 +15,6 @@ export class OrdersRepository implements IOrdersRepository {
       try {
           await mysqlDatabase.default.raw(sql, [clientId || null]).then(data => {
               if (data[0].length > 0) {
-                console.log(data[0]);
                 data[0].forEach((result: any) => {
                     orders.push({
                         id: result['id'],

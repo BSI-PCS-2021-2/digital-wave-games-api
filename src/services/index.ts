@@ -7,3 +7,4 @@ export { OrdersService } from './orders.service';
 export { OrderItemsService } from './orderItems.service';
 export { CartsService } from './carts.service';
 export { CartItemsService } from './cartItems.service';
+export { WalletsService } from './wallets.service';

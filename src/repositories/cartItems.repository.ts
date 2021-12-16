@@ -39,9 +39,7 @@ export class CartItemsRepository implements ICartItemsRepository{
 
   async postCartItem(postCartItemDTO: PostCartItemDTO): Promise<number[]> {
     let index: number[] = [];
-
-    console.log("repositorio")
-    console.log(postCartItemDTO);
+    
     try {
 
         await mysqlDatabase

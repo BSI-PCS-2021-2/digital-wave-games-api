@@ -19,7 +19,6 @@ export class CartsRepository implements ICartsRepository{
                       id: result['id'],
                       clientId: result['id_cliente']
                     };
-                    console.log(cart);
                   });
                 }
 

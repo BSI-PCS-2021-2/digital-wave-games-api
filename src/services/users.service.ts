@@ -5,7 +5,7 @@ import { ENCRYPTION_SECRET } from '../utils/secrets';
 import logger from '../utils/logger';
 import { ConfirmationCodesRepository } from '../repositories/confirmationCodes.repository';
 import sha256 from 'crypto-js/sha256';
-import { PasswordRecoveryCodesRepository } from '../repositories';
+import { PasswordRecoveryCodesRepository, WalletsRepository } from '../repositories';
 
 export class UsersService {
 
@@ -14,8 +14,8 @@ export class UsersService {
         private addressesRepository: IAddressesRepository,
         private confirmationCodesRepository: ConfirmationCodesRepository,
         private cartsRepository: ICartsRepository,
-        private passwordRecoveryCodesRepository: PasswordRecoveryCodesRepository
-        
+        private passwordRecoveryCodesRepository: PasswordRecoveryCodesRepository,
+        private walletsRepository: WalletsRepository,
         ) { }
 
     async get(): Promise<User[]> {
@@ -83,6 +83,7 @@ export class UsersService {
 
             await this.addressesRepository.postAddress(address);
             await this.cartsRepository.postCart(cart);
+            await this.walletsRepository.postWallet(response[0]);
             
             return response;
 

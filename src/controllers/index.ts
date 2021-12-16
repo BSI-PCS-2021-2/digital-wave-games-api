@@ -22,7 +22,7 @@ const cartsRepository = new CartsRepository();
 const cartItemsRepository = new CartItemsRepository();
 const walletsRepository = new WalletsRepository();
 
-const usersService = new UsersService(usersRepository, addressesRepository, confirmationCodesRepository, cartsRepository, passwordRecoveryCodesRepository);
+const usersService = new UsersService(usersRepository, addressesRepository, confirmationCodesRepository, cartsRepository, passwordRecoveryCodesRepository, walletsRepository);
 const productsService = new ProductsService(productsRepository);
 const confirmationCodesService = new ConfirmationCodesService(confirmationCodesRepository);
 const passwordRecoveryCodesService = new PasswordRecoveryCodesService(passwordRecoveryCodesRepository, usersRepository);

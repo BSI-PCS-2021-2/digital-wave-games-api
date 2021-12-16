@@ -40,4 +40,27 @@ export class WalletsRepository implements IWalletsRepository {
 
     }
 
+    async postWallet(userId: number): Promise<boolean> {
+
+        const sql = `INSERT INTO carteira (valor, id_usuario) VALUES (?, ?);`;
+
+        try {
+            await mysqlDatabase.default.raw(sql, [
+                0,
+                userId || null,
+            ])
+            .catch(err => {
+                logger.error(err);
+                throw new Error(err);
+            });
+
+        } catch (error: any) {
+            logger.error(error);
+            throw new Error(error);
+        }
+
+        return true;
+
+    }
+
 }

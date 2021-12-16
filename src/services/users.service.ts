@@ -126,4 +126,18 @@ export class UsersService {
 
     }
 
+    async getAddresses(userId: number): Promise<any[]> {
+        try {
+
+            const response = await this.usersRepository.getAddresses(userId);
+
+            return response;
+
+        } catch (error: any) {
+            logger.error(error);
+            throw new Error(error);
+        }
+
+    }
+
 }

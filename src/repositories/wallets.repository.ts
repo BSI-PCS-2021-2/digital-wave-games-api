@@ -63,4 +63,53 @@ export class WalletsRepository implements IWalletsRepository {
 
     }
 
+    async putWallet(walletId: number, value: number): Promise<boolean> {
+
+        console.log(walletId);
+        console.log(value);
+
+        const sql = `UPDATE carteira SET valor = valor + ? WHERE id = ?;`;
+
+        try {
+            await mysqlDatabase.default.raw(sql, [
+                value,
+                walletId || null,
+            ])
+            .catch(err => {
+                logger.error(err);
+                throw new Error(err);
+            });
+
+        } catch (error: any) {
+            logger.error(error);
+            throw new Error(error);
+        }
+
+        return true;
+
+    }
+
+    async decreaseFunds(total: number, userId: number): Promise<boolean> {
+
+        const sql = `UPDATE carteira SET valor = valor - ? WHERE id_usuario = ?;`;
+
+        try {
+            await mysqlDatabase.default.raw(sql, [
+                total,
+                userId,
+            ])
+            .catch(err => {
+                logger.error(err);
+                throw new Error(err);
+            });
+
+        } catch (error: any) {
+            logger.error(error);
+            throw new Error(error);
+        }
+
+        return true;
+
+    }
+
 }

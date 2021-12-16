@@ -9,12 +9,12 @@ router.get('/order/:order_id', (request, response) => {
     return ordersController.getOrder(request, response);
 });
 
-router.post('/order', (request, response) => {
-    return ordersController.postOrder(request, response);
-});
-
 router.get('/order/:order_id/items', (request, response) => {
     return ordersController.getOrderItems(request, response);
+});
+
+router.post('/order', (request, response) => {
+    return ordersController.postOrder(request, response);
 });
 
 

@@ -80,27 +80,25 @@ export class OrdersRepository implements IOrdersRepository {
 
     }
 
-    async postOrder(postOrderDTO: PostOrderDTO): Promise<number[]> {
+    async postOrder(postOrderDTO: PostOrderDTO): Promise<any> {
 
-        let index: number[] = [];
+        const response = {
+            total: '',
+            userId: ''
+        }
+
+        const sql = 'SELECT sum((SELECT p.preco FROM produto p WHERE p.id = i.id_produto)) as preco_total, (SELECT id FROM usuario_cliente u WHERE u.id = (SELECT c.id_cliente FROM carrinho c WHERE c.id = i.id_carrinho)) as id_usuario FROM item_carrinho i where i.id_carrinho = ?;'
 
         try {
+            await mysqlDatabase.default.raw(sql, [postOrderDTO.cartId || null]).then(data => {
+                if (data[0].length > 0) {
+                    data[0].forEach((result: any) => {
+                        response.total = result['preco_total'];
+                        response.userId = result['id_usuario'];
+                  });
+                }
 
-            await mysqlDatabase
-            .default('pedido')
-            .returning('id')
-            .insert([{
-                preco_total: postOrderDTO.totalPrice || null,
-                peso_total: postOrderDTO.totalWeight || null,
-                data_previsao_entrega: postOrderDTO.expectedDeliveryDate || null,
-                data_compra: postOrderDTO.purchaseDate,
-                id_forma_pagamento: postOrderDTO.paymentType || null,
-                id_cliente: postOrderDTO.userClientId || null
-            }
-            ]).then( insertedIndex => {
-                index = insertedIndex;
-            })
-            .catch(err => {
+            }).catch(err => {
                 logger.error(err);
                 throw new Error(err);
             });
@@ -110,6 +108,6 @@ export class OrdersRepository implements IOrdersRepository {
             throw new Error(error);
         }
 
-        return index;
+        return response;
     }
 }

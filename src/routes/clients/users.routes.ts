@@ -36,4 +36,9 @@ router.post('/password-recovery-codes', (request, response) => {
     return passwordRecoveryCodesController.post(request, response);
 });
 
+// Mover para o controller addresses
+router.get('/user/:id/addresses', (request, response) => {
+    return usersController.getAddresses(request, response);
+});
+
 export default router;

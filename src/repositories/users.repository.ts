@@ -185,4 +185,44 @@ export class UsersRepository implements IUsersRepository {
 
     }
 
+    async getAddresses(userId: number): Promise<any> {
+
+
+        let addresses: any[] = [];
+
+        const sql = `SELECT * FROM endereco WHERE id_cliente = ?;`;
+
+        try {
+            await mysqlDatabase.default.raw(sql, [userId || null]).then(data => {
+
+                if (data[0].length > 0) {
+                    data[0].forEach((userResult: any) => {
+
+                        addresses.push({
+                            postalCode: userResult['cep'],
+                            city: userResult['cidade'],
+                            district: userResult['bairro'],
+                            street: userResult['rua'],
+                            number: userResult['numero'],
+                            additionalInformation: userResult['complemento'],
+                            state: userResult['estado']
+                        });
+
+                    });
+                }
+
+            }).catch((error: any) => {
+                logger.error(error);
+                throw new Error(error);
+            });
+
+        } catch (error: any) {
+            logger.error(error);
+            throw new Error(error);
+        }
+
+        return addresses;
+
+    }
+
 }

@@ -21,25 +21,15 @@ export class OrdersController {
 
     async postOrder(request: Request, response: Response): Promise<Response> {
         const {
-            totalPrice,
-            totalWeight,
-            expectedDeliveryDate,
-            purchaseDate,
-            paymentType,
-            userClientId,
-            orderItems
+            cartId,
+            addressId
          } = request.body;
 
         try {
 
             const result = await this.ordersService.postOrder({
-                totalPrice: totalPrice,
-                totalWeight: totalWeight,
-                expectedDeliveryDate: expectedDeliveryDate,
-                purchaseDate: purchaseDate,
-                paymentType: paymentType,
-                userClientId: userClientId,
-                orderItems: orderItems
+                cartId: cartId,
+                addressId: addressId
             });
 
             return response.send(result);
@@ -50,6 +40,7 @@ export class OrdersController {
             })
         }
     }
+
 
     async getOrderItems(request: Request, response: Response): Promise<Response> {
 

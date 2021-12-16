@@ -30,4 +30,18 @@ export class WalletsService {
 
     }
 
+    async put(walletId: number, value: number): Promise<boolean> {
+        try {
+
+            const response = await this.walletsRepository.putWallet(walletId, value);
+
+            return response;
+
+        } catch (error: any) {
+            logger.error(error);
+            throw new Error(error);
+        }
+
+    }
+
 }

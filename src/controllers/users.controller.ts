@@ -144,4 +144,20 @@ export class UsersController {
         }
 
     }
+
+    async getAddresses(request: Request, response: Response): Promise<Response> {
+
+        try {
+
+            const result = await this.usersService.getAddresses(parseInt(request.params.id));
+
+            return response.send(result);
+
+        } catch (error: any) {
+            return response.status(400).json({
+                message: error.message || 'Unexpected error.'
+            })
+        }
+
+    }
 }

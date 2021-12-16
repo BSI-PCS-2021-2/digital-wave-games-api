@@ -1,10 +1,15 @@
 import { Order, PostOrderDTO } from '../models';
 import { IOrdersRepository, IOrderItemsRepository } from '../interfaces';
 import logger from '../utils/logger';
+import { WalletsRepository } from '../repositories/wallets.repository';
 
 export class OrdersService {
 
-    constructor(private ordersRepository: IOrdersRepository, private orderItemsRepository: IOrderItemsRepository) { }
+    constructor(
+        private ordersRepository: IOrdersRepository,
+        private orderItemsRepository: IOrderItemsRepository,
+        private walletsRepository: WalletsRepository
+        ) { }
 
     async getOrdersByClient(clientId: number): Promise<Order[]> {
         try {
@@ -31,19 +36,23 @@ export class OrdersService {
         }
     }
 
-    async postOrder(postOrderDTO: PostOrderDTO): Promise<number[]> {
+    async postOrder(postOrderDTO: PostOrderDTO): Promise<boolean> {
         try {
 
-            const response: number[] = await this.ordersRepository.postOrder(postOrderDTO);
+            const response1: any = await this.ordersRepository.postOrder(postOrderDTO);
 
-            postOrderDTO.orderItems.forEach(postOrderItemDTO => {
+            const response2 = await this.walletsRepository.decreaseFunds(response1.total, response1.userId);
 
-              postOrderItemDTO.orderId = response[0];
+            // const response: number[] = await this.ordersRepository.postOrder(postOrderDTO);
 
-              this.orderItemsRepository.postOrderItem(postOrderItemDTO);
-            });
+            // postOrderDTO.orderItems.forEach(postOrderItemDTO => {
 
-            return response;
+            //   postOrderItemDTO.orderId = response[0];
+
+            //   this.orderItemsRepository.postOrderItem(postOrderItemDTO);
+            // });
+
+            return response2;
 
         } catch (error: any) {
             logger.error(error);

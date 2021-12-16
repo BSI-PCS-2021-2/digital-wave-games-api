@@ -7,5 +7,6 @@ export interface IUsersRepository {
     getUser(username: string): Promise<User | null>;
     postUser(postUserDTO: PostUserDTO): Promise<number[]>;
     patchUser(patchUserDTO: PatchUserDTO): Promise<number[]>
+    getAddresses(userId: number): Promise<any[]>
 
 }

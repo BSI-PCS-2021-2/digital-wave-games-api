@@ -6,5 +6,4 @@ export interface IOrdersRepository {
     getOrder(id: number): Promise<Order | null>;
     postOrder(postOrderDTO: PostOrderDTO): Promise<number[]>;
 
-
 }

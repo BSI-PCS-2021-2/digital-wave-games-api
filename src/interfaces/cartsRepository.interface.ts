@@ -4,5 +4,5 @@ export interface ICartsRepository {
 
   postCart(postCartDTO: PostCartDTO): Promise<number[]> | null;
   getCartByClient(clientId: number): Promise<Cart | null>;
-  
+  cleanCart(cartId: number): Promise<boolean>;
 }

@@ -18,6 +18,18 @@ export class CartsService {
         }
     }
 
+    async cleanCart(cartId: number): Promise<boolean> {
+        console.log('clean cart service')
+        try {
+            return this.cartsRepository.cleanCart(cartId);
+
+        } catch (error: any) {
+            logger.error(error);
+            throw new Error(error);
+        }
+    }
+
+
     async postCart(postCartDTO: PostCartDTO): Promise<number[] | null> {
 
         try {

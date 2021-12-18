@@ -64,15 +64,13 @@ export class WalletsRepository implements IWalletsRepository {
     }
 
     async putWallet(walletId: number, value: number): Promise<boolean> {
+    
 
-        console.log(walletId);
-        console.log(value);
-
-        const sql = `UPDATE carteira SET valor = valor + ? WHERE id = ?;`;
+        const sql = `UPDATE carteira SET valor = ? WHERE id = ?;`;
 
         try {
             await mysqlDatabase.default.raw(sql, [
-                value,
+                valor || null,
                 walletId || null,
             ])
             .catch(err => {

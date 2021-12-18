@@ -24,7 +24,6 @@ export class WalletsController {
     async put(request: Request, response: Response): Promise<Response> {
 
         try {
-
             const result = await this.walletsService.put(request.body.walletId, request.body.value);
 
             return response.send(result);

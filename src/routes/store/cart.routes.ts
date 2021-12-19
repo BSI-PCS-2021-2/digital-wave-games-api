@@ -18,7 +18,6 @@ router.put('/cart/items/:item_id', (request, response) => {
 });
 
 router.delete('/cart/:cart_id/clean', (request, response) => {
-    console.log('cart clean controller');
     return cartsController.cleanCart(request, response);
 });
 

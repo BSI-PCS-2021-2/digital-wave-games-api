@@ -19,7 +19,6 @@ export class CartsService {
     }
 
     async cleanCart(cartId: number): Promise<boolean> {
-        console.log('clean cart service')
         try {
             return this.cartsRepository.cleanCart(cartId);
 

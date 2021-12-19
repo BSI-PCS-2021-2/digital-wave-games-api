@@ -23,7 +23,6 @@ export class CartsController {
     async cleanCart(request: Request, response: Response): Promise<Response> {
 
         try {
-            console.log('cart clean controller')
             await this.cartsService.cleanCart(parseInt(request.params.cart_id));
             return response.status(200);
         } catch (error: any) {

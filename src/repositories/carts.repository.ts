@@ -66,7 +66,6 @@ export class CartsRepository implements ICartsRepository{
 
   async cleanCart(cartId: number): Promise<boolean> {
 
-    console.log('clean cart repository')
       const sql = `DELETE FROM item_carrinho WHERE id_carrinho=?`;
         try {
             await mysqlDatabase.default.raw(sql, [cartId || null]).then()

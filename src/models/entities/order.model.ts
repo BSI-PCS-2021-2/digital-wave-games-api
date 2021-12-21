@@ -4,8 +4,9 @@ export class Order {
     public totalWeight?: number;
     public expectedDeliveryDate?: Date;
     public purchaseDate?: Date;
-    public paymentType?: string;
+    public paymentType?: number;
     public userClientId?: number;
+    public deliveryId?: number;
 
     constructor(props: Order) {
         Object.assign(this, props);

@@ -8,3 +8,5 @@ export { OrderItemsService } from './orderItems.service';
 export { CartsService } from './carts.service';
 export { CartItemsService } from './cartItems.service';
 export { WalletsService } from './wallets.service';
+export { PaymentService } from './payment.service';
+export { FreightService } from './freight.service';

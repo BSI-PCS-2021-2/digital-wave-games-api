@@ -75,7 +75,7 @@ export class OrderItemsRepository implements IOrderItemsRepository {
     }
 
 
-    async postOrderItem(postOrderItemDTO: PostOrderItemDTO): Promise<number[]> {
+    async postOrderItem(orderItem: OrderItem): Promise<number[]> {
 
         let index: number[] = [];
 
@@ -84,10 +84,10 @@ export class OrderItemsRepository implements IOrderItemsRepository {
             .default('item_pedido')
             .returning('id')
             .insert([{
-                quantidade: postOrderItemDTO.amount || null,
-                preco_unitario: postOrderItemDTO.unitPrice || null,
-                id_produto: postOrderItemDTO.productId || null,
-                id_pedido: postOrderItemDTO.orderId || null,
+                quantidade: orderItem.amount || null,
+                preco_unitario: orderItem.unitPrice || null,
+                id_produto: orderItem.productId || null,
+                id_pedido: orderItem.orderId || null,
             }
             ]).then( insertedIndex => {
                 index = insertedIndex;

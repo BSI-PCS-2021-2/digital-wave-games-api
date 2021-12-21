@@ -4,6 +4,6 @@ export interface IOrderItemsRepository {
 
     getOrderItemsByOrder(orderId: number): Promise<OrderItem[]>;
     getOrderItem(id: number): Promise<OrderItem | null>;
-    postOrderItem(orderItem: PostOrderItemDTO): Promise<number[]>;
+    postOrderItem(orderItem: OrderItem): Promise<number[]>;
 
 }

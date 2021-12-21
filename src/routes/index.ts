@@ -6,6 +6,8 @@ import wallets from './clients/wallets.routes';
 import products from './store/products.routes';
 import orders from './store/orders.routes';
 import carts from './store/cart.routes';
+import payment from './purchase/payment.routes';
+import freight from './purchase/freight.routes';
 
 const routes = Router();
 
@@ -15,5 +17,7 @@ routes.use('/clients/', wallets);
 routes.use('/store/', products);
 routes.use('/store/', orders);
 routes.use('/store/', carts);
+routes.use('/purchase/', payment);
+routes.use('/purchase/', freight);
 
 export default routes;

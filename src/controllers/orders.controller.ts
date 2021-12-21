@@ -22,17 +22,21 @@ export class OrdersController {
     async postOrder(request: Request, response: Response): Promise<Response> {
         const {
             cartId,
-            addressId
+            totalPrice,
+            deliveryId,
+            paymentTypeId
          } = request.body;
 
         try {
 
             const result = await this.ordersService.postOrder({
                 cartId: cartId,
-                addressId: addressId
+                totalPrice: totalPrice,
+                deliveryId: deliveryId,
+                paymentTypeId: paymentTypeId
             });
 
-            return response.send(result);
+            return response.status(201).json({id: result});
 
         } catch (error: any) {
             return response.status(400).json({

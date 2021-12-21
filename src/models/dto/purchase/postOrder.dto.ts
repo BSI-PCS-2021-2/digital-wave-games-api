@@ -1,6 +1,6 @@
-import { PostOrderItemDTO } from './postOrderItem.dto';
-
 export interface PostOrderDTO {
     cartId: number;
-    addressId: number;
+    totalPrice: number;
+    deliveryId: number;
+    paymentTypeId: number; 
 }

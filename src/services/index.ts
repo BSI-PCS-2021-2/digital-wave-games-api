@@ -10,3 +10,4 @@ export { CartItemsService } from './cartItems.service';
 export { WalletsService } from './wallets.service';
 export { PaymentService } from './payment.service';
 export { FreightService } from './freight.service';
+export { SupportService } from './support.service'

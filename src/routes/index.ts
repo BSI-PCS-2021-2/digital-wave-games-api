@@ -8,9 +8,11 @@ import orders from './store/orders.routes';
 import carts from './store/cart.routes';
 import payment from './purchase/payment.routes';
 import freight from './purchase/freight.routes';
+import support from './support/support.routes';
 
 const routes = Router();
 
+routes.use('/support/', support)
 routes.use('/auth/', auth);
 routes.use('/clients/', users);
 routes.use('/clients/', wallets);

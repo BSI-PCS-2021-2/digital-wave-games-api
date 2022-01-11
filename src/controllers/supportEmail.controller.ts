@@ -6,12 +6,13 @@ export class SupportEmailController {
     constructor(private supportService: SupportService) { }
 
     async post(request: Request, response: Response): Promise<Response> {
-        
-        const email = "example@gmail.com";
-        const clientEmail = "request.body.clientEmail";
-        const category = "request.body.category";
-        const message = "request.body.message";
-        
+
+        const email = process.env.EMAIL_SUPPORT;
+        const {
+            clientEmail,
+            category,
+            message } = request.body
+
 
         try {
 
@@ -22,7 +23,7 @@ export class SupportEmailController {
                 message: message
             });
 
-            return response.send(clientEmail + " teste");
+            return response.send(result);
 
         } catch (error: any) {
             return response.status(400).json({

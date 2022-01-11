@@ -1,5 +1,5 @@
 export interface SupportEmailDTO {
-    email: string,
+    email?: string,
     clientEmail?: string,
     category?: string,
     message?: string

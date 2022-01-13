@@ -19,4 +19,4 @@ export { CartItem } from './entities/cartItem.model';
 export { Wallet } from './entities/wallet.model';
 export { Cart } from './entities/cart.model'
 export { PutAddressDTO } from './dto/users/putAddress.dto';
-
+export { SupportEmailDTO } from './dto/supportEmail/supportEmail.dto'

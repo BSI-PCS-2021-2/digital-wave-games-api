@@ -8,9 +8,10 @@ import { CartsController } from './carts.controller';
 import { WalletsController } from './wallets.controller';
 import { PaymentController } from './payment.controller';
 import { FreightController } from './freight.controller';
+import { SupportEmailController } from './supportEmail.controller';
 
 import { UsersRepository, AddressesRepository, ProductsRepository, OrdersRepository, OrderItemsRepository, CartsRepository, CartItemsRepository, ConfirmationCodesRepository, PasswordRecoveryCodesRepository, WalletsRepository } from '../repositories';
-import { UsersService, ProductsService, ConfirmationCodesService, AuthenticationService, OrdersService, OrderItemsService, CartsService, CartItemsService, PasswordRecoveryCodesService, WalletsService, PaymentService, FreightService } from '../services';
+import { SupportService, UsersService, ProductsService, ConfirmationCodesService, AuthenticationService, OrdersService, OrderItemsService, CartsService, CartItemsService, PasswordRecoveryCodesService, WalletsService, PaymentService, FreightService } from '../services';
 
 
 const usersRepository = new UsersRepository();
@@ -24,6 +25,7 @@ const cartsRepository = new CartsRepository();
 const cartItemsRepository = new CartItemsRepository();
 const walletsRepository = new WalletsRepository();
 
+const supportService = new SupportService();
 const usersService = new UsersService(usersRepository, addressesRepository, confirmationCodesRepository, cartsRepository, passwordRecoveryCodesRepository, walletsRepository);
 const productsService = new ProductsService(productsRepository);
 const confirmationCodesService = new ConfirmationCodesService(confirmationCodesRepository);
@@ -37,6 +39,7 @@ const walletsService = new WalletsService(usersRepository, walletsRepository);
 const paymentService = new PaymentService();
 const freightService = new FreightService();
 
+const supportEmailController = new SupportEmailController(supportService);
 const usersController = new UsersController(usersService, ordersService, cartsService);
 const productsController = new ProductsController(productsService);
 const confirmationCodesController = new ConfirmationCodesController(confirmationCodesService);
@@ -48,4 +51,4 @@ const walletsController = new WalletsController(walletsService);
 const paymentController = new PaymentController(paymentService);
 const freightController = new FreightController(freightService);
 
-export { walletsController, usersService, usersController, productsService, productsController, confirmationCodesController, passwordRecoveryCodesController, authenticationController, ordersService, ordersController, orderItemsService, cartsService, cartItemsService, cartsController, paymentService, paymentController, freightService, freightController }
+export { supportEmailController, walletsController, usersService, usersController, productsService, productsController, confirmationCodesController, passwordRecoveryCodesController, authenticationController, ordersService, ordersController, orderItemsService, cartsService, cartItemsService, cartsController, paymentService, paymentController, freightService, freightController }

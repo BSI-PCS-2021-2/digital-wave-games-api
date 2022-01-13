@@ -7,7 +7,7 @@ export class SupportEmailController {
 
     async post(request: Request, response: Response): Promise<Response> {
 
-        const email = process.env.EMAIL_SUPPORT;
+        const email = process.env.EMAIL_USER;
         const {
             clientEmail,
             category,

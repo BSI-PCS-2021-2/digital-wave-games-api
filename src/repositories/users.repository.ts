@@ -1,5 +1,5 @@
 import { IUsersRepository } from '../interfaces';
-import { PatchUserDTO, PostUserDTO, User } from '../models';
+import { PatchUserDTO, PostUserDTO, PutUserDTO, User } from '../models';
 import { mysqlDatabase } from '../databases';
 import logger from '../utils/logger';
 
@@ -24,6 +24,9 @@ export class UsersRepository implements IUsersRepository {
                             email: user['email'],
                             isEmailConfirmed: user['email_confirmado'],
                             profileImage: user['foto_perfil'],
+                            tel: user['tel_1'],
+                            cel1: user['tel_2'],
+                            cel2: user['tel_3'],
                             failedLoginAttempts: user['acesso_falho'],
                             nextAllowedAccess: user['liberar_acesso'],
                             banned: user['bloqueado']
@@ -66,6 +69,9 @@ export class UsersRepository implements IUsersRepository {
                             email: userResult['email'],
                             isEmailConfirmed: userResult['email_confirmado'],
                             profileImage: userResult['foto_perfil'],
+                            tel: userResult['tel_1'],
+                            cel1: userResult['tel_2'],
+                            cel2: userResult['tel_3'],
                             failedLoginAttempts: userResult['acesso_falho'],
                             nextAllowedAccess: userResult['liberar_acesso'],
                             banned: userResult['bloqueado']
@@ -155,6 +161,46 @@ export class UsersRepository implements IUsersRepository {
 
     }
 
+    async update(putUserDTO: PutUserDTO): Promise<void> {
+
+        try {
+
+            await mysqlDatabase
+            .default("usuario_cliente")
+            .update({
+                email: putUserDTO.email,
+                tel_1: putUserDTO.phone1,
+                tel_2: putUserDTO.phone2,
+                tel_3: putUserDTO.phone3,
+                nome: putUserDTO.name,
+                nome_usuario: putUserDTO.username,
+                email_secundario: putUserDTO.secondaryEmail
+            })
+            .where({id: putUserDTO.id})
+
+        } catch (error: any) {
+            logger.error(error);
+            throw new Error(error);
+        }
+    }
+
+    async changePassword(username: string, password: string): Promise<void> {
+
+        try {
+
+            await mysqlDatabase
+            .default("usuario_cliente")
+            .update({
+                senha: password
+            })
+            .where({nome_usuario: username})
+
+        } catch (error: any) {
+            logger.error(error);
+            throw new Error(error);
+        }
+    }
+
     async patchUser(patchUserDTO: PatchUserDTO): Promise<number[]> {
 
         let index: number[] = [];
@@ -199,6 +245,7 @@ export class UsersRepository implements IUsersRepository {
                     data[0].forEach((userResult: any) => {
 
                         addresses.push({
+                            id: userResult['id'],
                             postalCode: userResult['cep'],
                             city: userResult['cidade'],
                             district: userResult['bairro'],

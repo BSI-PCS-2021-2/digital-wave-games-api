@@ -1,4 +1,5 @@
 export interface PostUserDTO {
+    cep: string,
     email: string;
     username: string;
     name: string

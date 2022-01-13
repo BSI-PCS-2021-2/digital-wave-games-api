@@ -1,7 +1,8 @@
 import { IAddressesRepository } from '../interfaces';
-import { PostAddressDTO } from '../models';
+import { PostAddressDTO, User } from '../models';
 import { mysqlDatabase } from '../databases';
 import logger from '../utils/logger';
+import { PutAddressDTO } from '../models';
 
 export class AddressesRepository implements IAddressesRepository {
 
@@ -34,4 +35,45 @@ export class AddressesRepository implements IAddressesRepository {
 
     }
 
+    async delete(addressId: number, userId: number) {
+        try {
+
+            mysqlDatabase
+            .default('endereco')
+            .delete()
+            .where({id: addressId, id_cliente: userId})
+            .catch((error: any) => {
+              logger.error(error);
+              throw new Error(error);
+          });
+          
+        } catch (error: any) {
+            logger.error(error);
+            throw new Error(error);
+        }
+        return;
+    }
+
+    async update(putAddressDTO: PutAddressDTO): Promise<void> {
+
+        try {
+
+            await mysqlDatabase
+            .default("endereco")
+            .update({
+                cidade: putAddressDTO.city,
+                bairro: putAddressDTO.district,
+                rua: putAddressDTO.street,
+                numero: putAddressDTO.number,
+                complemento: putAddressDTO.additionalInfo,
+                estado: putAddressDTO.state,
+                cep: putAddressDTO.cep
+            })
+            .where({id: putAddressDTO.id})
+
+        } catch (error: any) {
+            logger.error(error);
+            throw new Error(error);
+        }
+    }
 }

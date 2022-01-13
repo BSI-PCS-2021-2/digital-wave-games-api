@@ -1,5 +1,6 @@
 export { User } from './entities/user.model';
 export { PostUserDTO } from './dto/users/postUser.dto';
+export { PutUserDTO } from './dto/users/putUser.dto';
 export { PatchUserDTO } from './dto/users/patchUser.dto';
 export { PostConfirmationCodesDTO } from './dto/users/postConfirmationCodes.dto';
 export { PostPasswordRecoveryCodesDTO } from './dto/users/postPasswordRecoveryCodes.dto';
@@ -17,4 +18,5 @@ export { OrderItem } from './entities/orderItem.model';
 export { CartItem } from './entities/cartItem.model';
 export { Wallet } from './entities/wallet.model';
 export { Cart } from './entities/cart.model'
+export { PutAddressDTO } from './dto/users/putAddress.dto';
 export { SupportEmailDTO } from './dto/supportEmail/supportEmail.dto'

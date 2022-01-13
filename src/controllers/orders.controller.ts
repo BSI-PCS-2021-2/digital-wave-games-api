@@ -36,7 +36,7 @@ export class OrdersController {
                 paymentTypeId: paymentTypeId
             });
 
-            return response.status(201).json({id: result});
+            return response.send(result);
 
         } catch (error: any) {
             return response.status(400).json({

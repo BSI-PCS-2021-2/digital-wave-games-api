@@ -9,7 +9,7 @@ router.get('/users', (request, response) => {
 });
 
 router.get('/user/:username', (request, response) => {
-    return usersController.get(request, response);
+    return usersController.getByUsername(request, response);
 });
 
 router.patch('/user/:username', (request, response) => {
@@ -36,9 +36,28 @@ router.post('/password-recovery-codes', (request, response) => {
     return passwordRecoveryCodesController.post(request, response);
 });
 
-// Mover para o controller addresses
+router.post('/change-password', (request, response) => {
+    return usersController.changePassword(request, response);
+});
+
 router.get('/user/:id/addresses', (request, response) => {
     return usersController.getAddresses(request, response);
 });
 
+router.post('/user/address', (request, response) => {
+    return usersController.postAddress(request, response);
+});
+
+router.put('/user/infos', (request, response) => {
+    console.log("route")
+    return usersController.putInfos(request, response);
+});
+
+router.put('/user/address', (request, response) => {
+    return usersController.putAddress(request, response);
+});
+
+router.delete('/user/:clientId/address/:addressId', (request, response) => {
+    return usersController.deleteAddress(request, response);
+});
 export default router;

@@ -1,5 +1,5 @@
-export interface PostAddressDTO {
-    cep: string,
+export interface PutAddressDTO {
+    id: number,
     postalCode: string,
     city: string,
     district: string,
@@ -7,5 +7,5 @@ export interface PostAddressDTO {
     number: string,
     additionalInfo: string,
     state: string,
-    clientId: number
+    cep: string
 }

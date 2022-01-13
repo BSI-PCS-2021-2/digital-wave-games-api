@@ -59,13 +59,15 @@ export class UsersController {
             phone2,
             phone3,
             secondaryEmail,
-            code
+            code,
+            cep
          } = request.body;
 
         try {
 
             const result = await this.usersService.post({
                 email: email,
+                cep: cep,
                 username: username,
                 name: name,
                 password: password,
@@ -159,5 +161,151 @@ export class UsersController {
             })
         }
 
+    }
+
+    async deleteAddress(request: Request, response: Response): Promise<Response> {
+
+        try {  
+
+            console.log(request.params.clientId);
+            const result = await this.usersService.deleteAddress(parseInt(request.params.clientId), parseInt(request.params.addressId));
+
+            return response.send(result);
+
+        } catch (error: any) {
+            return response.status(400).json({
+                message: error.message || 'Unexpected error.'
+            })
+        }
+
+    }
+
+    async changePassword(request: Request, response: Response): Promise<Response> {
+
+        try {
+
+            const {
+                newPass,
+                oldPass,
+                username,
+             } = request.body;
+
+            const result = await this.usersService.changePassword(username, oldPass, newPass);
+
+            return response.send(result);
+
+        } catch (error: any) {
+            return response.status(400).json({
+                message: error.message || 'Unexpected error.'
+            })
+        }
+
+    }
+
+    async putInfos(request: Request, response: Response): Promise<Response> {
+        const {
+            id,
+            email,
+            username,
+            name,
+            tel,
+            phone1,
+            phone2,
+            secondaryEmail, 
+         } = request.body;
+         console.log(name)
+         console.log(username);
+
+        try {
+
+            const result = await this.usersService.putInfo({
+                id: id,
+                name: name,
+                username: username,
+                email: email,
+                phone1: tel,
+                phone2: phone1,
+                phone3: phone2,
+                secondaryEmail: secondaryEmail
+            });
+
+            return response.send(result);
+
+        } catch (error: any) {
+            return response.status(400).json({
+                message: error.message || 'Unexpected error.'
+            })
+        }
+    }
+
+    async putAddress(request: Request, response: Response): Promise<Response> {
+        const {
+            id,
+            postalCode,
+            city,
+            district,
+            street,
+            number,
+            additionalInfo,
+            state,
+            cep
+         } = request.body;
+
+        try {
+
+            const result = await this.usersService.putAddress({
+                id: id,
+                postalCode: postalCode,
+                city: city,
+                district: district,
+                street: street,
+                number: number,
+                additionalInfo: additionalInfo,
+                state: state,
+                cep: cep
+            });
+
+            return response.send(result);
+
+        } catch (error: any) {
+            return response.status(400).json({
+                message: error.message || 'Unexpected error.'
+            })
+        }
+    }
+    async postAddress(request: Request, response: Response): Promise<Response> {
+        const {
+            postalCode,
+            city,
+            district,
+            street,
+            number,
+            additionalInfo,
+            state,
+            cep,
+            clientId
+         } = request.body;
+
+        try {
+
+            const result = await this.usersService.postAddress({                
+                postalCode: postalCode,
+                city: city,
+                district: district,
+                street: street,
+                number: number,
+                additionalInfo: additionalInfo,
+                state: state,
+                cep: cep,
+                clientId: clientId
+            });
+
+            return response.send(result);
+
+        } catch (error: any) {
+            return response.status(400).json({
+                message: error.message || 'Unexpected error.'
+            })
+        }
     }
 }

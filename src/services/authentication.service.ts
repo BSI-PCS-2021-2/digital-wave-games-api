@@ -20,7 +20,6 @@ export class AuthenticationService {
 
             const dbPassword: string = await this.usersRepository.getUserPassword(username);
             const user: User | null = await this.usersRepository.getUser(username);
-
             if (dbPassword === sha256(password + ENCRYPTION_SECRET).toString()) {
                 const jwtBearerToken = jsonwebtoken.sign({}, RSA_PRIVATE_KEY, {
                     algorithm: 'RS256',

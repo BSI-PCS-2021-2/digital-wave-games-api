@@ -8,11 +8,11 @@ export class AddressesRepository implements IAddressesRepository {
 
     async postAddress(postAddressDTO: PostAddressDTO): Promise<boolean> {
 
-        const sql = `INSERT INTO endereco (cep, cidade, bairro, rua, numero, complemento, estado, id_cliente) VALUES (?, ?, ?, ?, ?, ?, ?, ?);`;
+        const sql = `INSERT INTO endereco (cep, cidade, bairro, rua, numero, complemento, estado, id_cliente, codigo_postal) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);`;
 
         try {
             await mysqlDatabase.default.raw(sql, [
-                postAddressDTO.postalCode || null,
+                postAddressDTO.cep || null,
                 postAddressDTO.city || null,
                 postAddressDTO.district || null,
                 postAddressDTO.street || null,
@@ -20,6 +20,7 @@ export class AddressesRepository implements IAddressesRepository {
                 postAddressDTO.additionalInfo || null,
                 postAddressDTO.state || null,
                 postAddressDTO.clientId || null,
+                postAddressDTO.postalCode || null
             ])
             .catch(err => {
                 logger.error(err);
@@ -67,7 +68,8 @@ export class AddressesRepository implements IAddressesRepository {
                 numero: putAddressDTO.number,
                 complemento: putAddressDTO.additionalInfo,
                 estado: putAddressDTO.state,
-                cep: putAddressDTO.cep
+                cep: putAddressDTO.cep,
+                codigo_postal: putAddressDTO.postalCode
             })
             .where({id: putAddressDTO.id})
 

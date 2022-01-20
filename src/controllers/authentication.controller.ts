@@ -11,7 +11,6 @@ export class AuthenticationController {
             username,
             password
          } = request.body;
-
         try {
 
             const result = await this.authenticationService.post({

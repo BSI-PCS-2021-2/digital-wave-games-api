@@ -27,6 +27,7 @@ export class UsersRepository implements IUsersRepository {
                             tel: user['tel_1'],
                             cel1: user['tel_2'],
                             cel2: user['tel_3'],
+                            secondaryEmail: user['email_secundario'],
                             failedLoginAttempts: user['acesso_falho'],
                             nextAllowedAccess: user['liberar_acesso'],
                             banned: user['bloqueado']
@@ -72,6 +73,7 @@ export class UsersRepository implements IUsersRepository {
                             tel: userResult['tel_1'],
                             cel1: userResult['tel_2'],
                             cel2: userResult['tel_3'],
+                            secondaryEmail: userResult['email_secundario'],
                             failedLoginAttempts: userResult['acesso_falho'],
                             nextAllowedAccess: userResult['liberar_acesso'],
                             banned: userResult['bloqueado']
@@ -246,13 +248,14 @@ export class UsersRepository implements IUsersRepository {
 
                         addresses.push({
                             id: userResult['id'],
-                            postalCode: userResult['cep'],
+                            postalCode: userResult['codigo_postal'],
                             city: userResult['cidade'],
                             district: userResult['bairro'],
                             street: userResult['rua'],
                             number: userResult['numero'],
-                            additionalInformation: userResult['complemento'],
-                            state: userResult['estado']
+                            additionalInfo: userResult['complemento'],
+                            state: userResult['estado'],
+                            cep: userResult['cep']
                         });
 
                     });

@@ -8,6 +8,7 @@ export class User {
     public tel?: string;
     public cel1?: string;
     public cel2?: string;
+    public secondaryEmail?: string;
     public failedLoginAttempts?: number;
     public nextAllowedAccess?: Date;
     public banned?: boolean;

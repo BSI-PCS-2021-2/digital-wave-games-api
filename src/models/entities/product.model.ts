@@ -1,18 +1,19 @@
+import { Gender } from "./gender.mode";
+import { Platform } from "./platform.model";
+import { Publisher } from "./publisher.model";
+import { RatingSystem } from "./ratingSystem";
+
 export class Product {
     public id?: number;
     public name?: string;
     public price?: number;
     public amount?: number;
-    public rating?: number;
     public description?: string;
-    public weight?: number;
-    public height?: number;
-    public deeph?: number;
     public releaseDate?: Date;
-    public genderId?: number;
-    public platformId?: number;
-    public ratingSystemId?: number;
-
+    public gender?: Gender;
+    public platform?: Platform;
+    public publisher?: Publisher;
+    public ratingSystem?: RatingSystem
 
     constructor(props: Product) {
         Object.assign(this, props);

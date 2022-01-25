@@ -12,6 +12,7 @@ export class User {
     public failedLoginAttempts?: number;
     public nextAllowedAccess?: Date;
     public banned?: boolean;
+    public resetFailedLoginAttempts?: Date
 
     constructor(props: User) {
         Object.assign(this, props);

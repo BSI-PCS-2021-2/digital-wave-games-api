@@ -25,6 +25,7 @@ export class AuthenticationService {
             let user: User | null = await this.usersRepository.getUser(username);
 
             if (user?.banned) {
+                console.log(user.banned)
                 user = await this.usersRepository.increaseFailedLoginAttempt(username);
                 response = {
                     nextAllowedAccess: user?.nextAllowedAccess,
@@ -70,7 +71,6 @@ export class AuthenticationService {
             logger.error(error);
             throw new Error(error);
         }
-        
         return response;
 
     }

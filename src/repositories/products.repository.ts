@@ -2,6 +2,7 @@ import { IProductsRepository } from '../interfaces';
 import { Gender, Platform, PostProductDTO, Product, Publisher, PutProductDTO, RatingSystem } from '../models';
 import { mysqlDatabase } from '../databases';
 import logger from '../utils/logger';
+import { result } from 'lodash';
 
 export class ProductsRepository implements IProductsRepository {
 
@@ -14,22 +15,14 @@ export class ProductsRepository implements IProductsRepository {
         try {
             await mysqlDatabase.default.raw(sql).then(data => {
                 if (data[0].length > 0) {
-                    data[0].forEach(async (result: any) => {
-                        let gender: Gender | undefined = await this.getGender(result['id_genero']);
-                        let publisher: Publisher | undefined = await this.getPublisher(result['id_publisher']);
-                        let platform: Platform | undefined = await this.getPlatform(result['id_plataforma']);
-                        let ratingSystem: RatingSystem | undefined = await this.getRatingSystem(result['id_classificacao_indicativa']);
+                    data[0].forEach(async(result: any) => {
                         products.push({
                             id: result['id'],
                             name: result['nome'],
                             price: result['preco'],
                             amount: result['quantidade'],
                             description: result['descricao'],
-                            releaseDate: result['data_lancamento'],
-                            gender: gender,
-                            platform: platform,
-                            ratingSystem: ratingSystem,
-                            publisher: publisher
+                            releaseDate: result['data_lancamento']
                         });
                     });
                 }
@@ -53,23 +46,15 @@ export class ProductsRepository implements IProductsRepository {
             await mysqlDatabase.default.raw(sql, [id || null]).then(data => {
                 if (data[0].length > 0) {
                     data[0].forEach(async(result: any) => {
-                    let gender: Gender | undefined = await this.getGender(result['id_genero']);
-                    let publisher: Publisher | undefined = await this.getPublisher(result['id_publisher']);
-                    let platform: Platform | undefined = await this.getPlatform(result['id_plataforma']);
-                    let ratingSystem: RatingSystem | undefined = await this.getRatingSystem(result['id_classificacao_indicativa']);
-                    product = {
-                      id: result['id'],
-                      name: result['nome'],
-                      price: result['preco'],
-                      amount: result['quantidade'],
-                      description: result['descricao'],
-                      releaseDate: result['data_lancamento'],
-                      gender: {id: 1, name: "test"},
-                      platform: {id: 1, name: "test"},
-                      ratingSystem: {id: 1, name: "test"},
-                      publisher: {id: 1, name: "test"}
-                    };
-                  });
+                        product = {
+                            id: result['id'],
+                            name: result['nome'],
+                            price: result['preco'],
+                            amount: result['quantidade'],
+                            description: result['descricao'],
+                            releaseDate: result['data_lancamento']
+                        };
+                    });
                 }
 
             }).catch(err => {
@@ -152,10 +137,9 @@ export class ProductsRepository implements IProductsRepository {
         }
     }
 
-    private async getGender(id: number): Promise<Gender | undefined> {
+    async getGender(id: number): Promise<Gender | undefined> {
         let gender: Gender | undefined = undefined;
-
-        const sql = `SELECT * FROM genero where id=?`;
+        const sql = `SELECT g.id, g.nome FROM genero as g JOIN produto as p ON g.id = p.id_genero WHERE p.id=?`;
         try {
             await mysqlDatabase.default.raw(sql, [id || null]).then(data => {
                 if (data[0].length > 0) {
@@ -165,7 +149,6 @@ export class ProductsRepository implements IProductsRepository {
                       id: result['id'],
                       name: result['nome']
                     };
-
                   });
                 }
 
@@ -178,15 +161,14 @@ export class ProductsRepository implements IProductsRepository {
             logger.error(error);
             throw new Error(error);
         }
-
         return gender;
     }
 
 
-    private async getPlatform(id: number): Promise<Platform | undefined> {
+    async getPlatform(id: number): Promise<Platform | undefined> {
         let platform: Platform | undefined = undefined;
 
-        const sql = `SELECT * FROM plataforma where id=?`;
+        const sql = `SELECT pa.id, pa.nome FROM plataforma as pa JOIN produto as p ON pa.id = p.id_plataforma WHERE p.id=?`;
         try {
             await mysqlDatabase.default.raw(sql, [id || null]).then(data => {
                 if (data[0].length > 0) {
@@ -214,10 +196,10 @@ export class ProductsRepository implements IProductsRepository {
     }
 
 
-    private async getPublisher(id: number): Promise<Publisher | undefined> {
+    async getPublisher(id: number): Promise<Publisher | undefined> {
         let publisher: Publisher | undefined = undefined;
 
-        const sql = `SELECT * FROM publisher where id=?`;
+        const sql = `SELECT pu.id, pu.nome FROM publisher as pu JOIN produto as p ON pu.id = p.id_publisher WHERE p.id=?`;
         try {
             await mysqlDatabase.default.raw(sql, [id || null]).then(data => {
                 if (data[0].length > 0) {
@@ -244,10 +226,10 @@ export class ProductsRepository implements IProductsRepository {
         return publisher;
     }
 
-    private async getRatingSystem(id: number): Promise<RatingSystem | undefined> {
+    async getRatingSystem(id: number): Promise<RatingSystem | undefined> {
         let ratingSystem: RatingSystem | undefined = undefined;
 
-        const sql = `SELECT * FROM classificacao_indicativa where id=?`;
+        const sql = `SELECT c.id, c.nome FROM classificacao_indicativa as c JOIN produto as p ON c.id = p.id_classificacao_indicativa WHERE p.id=?`;
         try {
             await mysqlDatabase.default.raw(sql, [id || null]).then(data => {
                 if (data[0].length > 0) {

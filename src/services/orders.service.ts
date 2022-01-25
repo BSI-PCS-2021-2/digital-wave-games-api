@@ -46,15 +46,17 @@ export class OrdersService {
             const cartId: number = postOrderDTO.cartId;
             const cart: Cart | null = await this.cartsRepository.getCart(cartId);
             const clientId: number | undefined = cart?.clientId;
-            const weight: number | undefined = await this.cartsRepository.getWeight(cartId);
+            let weight: number = 0;
             const expectedDeliveryDate: Date = new Date();
+            weight = await this.cartsRepository.getWeight(cartId);
+            console.log(weight);
             /***
              * Mudar a data de entrega prevista estática
              */
             expectedDeliveryDate.setDate(new Date().getDate() + 5);
 
             const order: Order = {
-                id: 0,
+                id: undefined,
                 totalWeight: weight,
                 totalPrice: postOrderDTO.totalPrice,
                 expectedDeliveryDate: expectedDeliveryDate,

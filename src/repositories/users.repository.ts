@@ -1,5 +1,5 @@
 import { IUsersRepository } from '../interfaces';
-import { PatchUserDTO, PostUserDTO, User } from '../models';
+import { PatchUserDTO, PostUserDTO, PutUserDTO, User } from '../models';
 import { mysqlDatabase } from '../databases';
 import logger from '../utils/logger';
 
@@ -16,7 +16,6 @@ export class UsersRepository implements IUsersRepository {
 
                 if (data[0].length > 0) {
                     data[0].forEach((user: any) => {
-
                         users.push({
                             id: user['id'],
                             username: user['nome_usuario'],
@@ -24,6 +23,10 @@ export class UsersRepository implements IUsersRepository {
                             email: user['email'],
                             isEmailConfirmed: user['email_confirmado'],
                             profileImage: user['foto_perfil'],
+                            tel: user['tel_1'],
+                            cel1: user['tel_2'],
+                            cel2: user['tel_3'],
+                            secondaryEmail: user['email_secundario'],
                             failedLoginAttempts: user['acesso_falho'],
                             nextAllowedAccess: user['liberar_acesso'],
                             banned: user['bloqueado']
@@ -52,8 +55,8 @@ export class UsersRepository implements IUsersRepository {
         let user: User | null = null;
 
         const sql = `SELECT * FROM usuario_cliente WHERE nome_usuario = ?;`;
-
         try {
+            await this.updateStatusBan(username);
             await mysqlDatabase.default.raw(sql, [username || null]).then(data => {
 
                 if (data[0].length > 0) {
@@ -66,6 +69,10 @@ export class UsersRepository implements IUsersRepository {
                             email: userResult['email'],
                             isEmailConfirmed: userResult['email_confirmado'],
                             profileImage: userResult['foto_perfil'],
+                            tel: userResult['tel_1'],
+                            cel1: userResult['tel_2'],
+                            cel2: userResult['tel_3'],
+                            secondaryEmail: userResult['email_secundario'],
                             failedLoginAttempts: userResult['acesso_falho'],
                             nextAllowedAccess: userResult['liberar_acesso'],
                             banned: userResult['bloqueado']
@@ -155,6 +162,46 @@ export class UsersRepository implements IUsersRepository {
 
     }
 
+    async update(putUserDTO: PutUserDTO): Promise<void> {
+
+        try {
+
+            await mysqlDatabase
+            .default("usuario_cliente")
+            .update({
+                email: putUserDTO.email,
+                tel_1: putUserDTO.phone1,
+                tel_2: putUserDTO.phone2,
+                tel_3: putUserDTO.phone3,
+                nome: putUserDTO.name,
+                nome_usuario: putUserDTO.username,
+                email_secundario: putUserDTO.secondaryEmail
+            })
+            .where({id: putUserDTO.id})
+
+        } catch (error: any) {
+            logger.error(error);
+            throw new Error(error);
+        }
+    }
+
+    async changePassword(username: string, password: string): Promise<void> {
+
+        try {
+
+            await mysqlDatabase
+            .default("usuario_cliente")
+            .update({
+                senha: password
+            })
+            .where({nome_usuario: username})
+
+        } catch (error: any) {
+            logger.error(error);
+            throw new Error(error);
+        }
+    }
+
     async patchUser(patchUserDTO: PatchUserDTO): Promise<number[]> {
 
         let index: number[] = [];
@@ -199,13 +246,15 @@ export class UsersRepository implements IUsersRepository {
                     data[0].forEach((userResult: any) => {
 
                         addresses.push({
-                            postalCode: userResult['cep'],
+                            id: userResult['id'],
+                            postalCode: userResult['codigo_postal'],
                             city: userResult['cidade'],
                             district: userResult['bairro'],
                             street: userResult['rua'],
                             number: userResult['numero'],
-                            additionalInformation: userResult['complemento'],
-                            state: userResult['estado']
+                            additionalInfo: userResult['complemento'],
+                            state: userResult['estado'],
+                            cep: userResult['cep']
                         });
 
                     });
@@ -225,4 +274,48 @@ export class UsersRepository implements IUsersRepository {
 
     }
 
+    async increaseFailedLoginAttempt(username: string): Promise<User | null> {
+        const sql0 = "UPDATE usuario_cliente SET acesso_falho = IF (reset_acesso_falho <= NOW(), 0, acesso_falho) WHERE nome_usuario = ?";
+        const sql1 = "UPDATE usuario_cliente SET acesso_falho = acesso_falho + 1, reset_acesso_falho = NOW() + INTERVAL 2 HOUR WHERE nome_usuario = ?";
+        const sql2 = "UPDATE usuario_cliente SET liberar_acesso = IF (acesso_falho > 3, NOW() + INTERVAL 5 * (acesso_falho - 3) SECOND, liberar_acesso) where nome_usuario = ?";
+        try {
+            await mysqlDatabase
+            .default
+            .raw(sql0, [username || null]);
+
+            await mysqlDatabase
+            .default
+            .raw(sql1, [username || null]);
+
+            await mysqlDatabase
+            .default
+            .raw(sql2, [username || null]);
+
+            await this.updateStatusBan(username);
+
+        } catch (error: any) {
+            logger.error(error);
+            throw new Error(error);
+        }
+        const user = await this.getUser(username);
+        if (user?.failedLoginAttempts != undefined && user?.failedLoginAttempts > 3) {
+            const date = new Date(Date.now() + user.failedLoginAttempts * 5);
+        }
+        return await this.getUser(username);
+    }
+
+
+    private async updateStatusBan(username: string): Promise<void> {
+        const sql =  "UPDATE usuario_cliente SET bloqueado = IF (liberar_acesso <= NOW(), false, true) WHERE nome_usuario = ?"
+
+        try {
+
+            await mysqlDatabase
+            .default.raw(sql, [username || null]);
+
+        } catch (error: any) {
+            logger.error(error);
+            throw new Error(error);
+        }
+    }
 }

@@ -1,4 +1,4 @@
-import { PatchUserDTO, PostAddressDTO, User, PostCartDTO } from '../models';
+import { PatchUserDTO, PostAddressDTO, User, PostCartDTO, PutUserDTO, PutAddressDTO } from '../models';
 import { PostUserDTO } from '../models';
 import { IUsersRepository, IAddressesRepository, ICartsRepository } from '../interfaces';
 import { ENCRYPTION_SECRET } from '../utils/secrets';
@@ -67,6 +67,7 @@ export class UsersService {
             const response: number[] = await this.usersRepository.postUser(postUserDTO);
 
             let address: PostAddressDTO = {
+                cep: postUserDTO.cep,
                 postalCode: postUserDTO.postalCode,
                 city: postUserDTO.city,
                 district: postUserDTO.district,
@@ -86,6 +87,74 @@ export class UsersService {
             await this.walletsRepository.postWallet(response[0]);
             
             return response;
+
+        } catch (error: any) {
+            logger.error(error);
+            throw new Error(error);
+        }
+    }
+
+
+    async postAddress(postAddressDTO: PostAddressDTO): Promise<void> {
+
+        try {
+
+            await this.addressesRepository.postAddress(postAddressDTO);
+
+        } catch (error: any) {
+            logger.error(error);
+            throw new Error(error);
+        }
+
+    }
+
+
+    async putAddress(putAddressDTO: PutAddressDTO): Promise<void> {
+
+        try {
+
+            await this.addressesRepository.update(putAddressDTO);
+
+        } catch (error: any) {
+            logger.error(error);
+            throw new Error(error);
+        }
+
+    }
+
+    async putInfo(putUserDTO: PutUserDTO): Promise<void> {
+
+        try {
+
+            await this.usersRepository.update(putUserDTO);
+
+        } catch (error: any) {
+            logger.error(error);
+            throw new Error(error);
+        }
+    }
+
+    async changePassword(username: string, oldPass: string, newPass: string): Promise<boolean> {
+
+        try {
+            const dbPassword: string = await this.usersRepository.getUserPassword(username);
+            const oldEncripted: string = sha256(oldPass + ENCRYPTION_SECRET).toString();
+            if (oldEncripted !== dbPassword) return false;
+
+            await this.usersRepository.changePassword(username, sha256(newPass + ENCRYPTION_SECRET).toString());
+            return true;
+
+        } catch (error: any) {
+            logger.error(error);
+            throw new Error(error);
+        }
+
+    }
+
+    async deleteAddress(userId: number, addressId: number): Promise<void> {
+        try {
+
+            await this.addressesRepository.delete(addressId, userId);
 
         } catch (error: any) {
             logger.error(error);

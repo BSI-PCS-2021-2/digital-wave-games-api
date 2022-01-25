@@ -1,5 +1,6 @@
 export { User } from './entities/user.model';
 export { PostUserDTO } from './dto/users/postUser.dto';
+export { PutUserDTO } from './dto/users/putUser.dto';
 export { PatchUserDTO } from './dto/users/patchUser.dto';
 export { PostConfirmationCodesDTO } from './dto/users/postConfirmationCodes.dto';
 export { PostPasswordRecoveryCodesDTO } from './dto/users/postPasswordRecoveryCodes.dto';
@@ -10,6 +11,8 @@ export { PostCartItemDTO } from './dto/purchase/postCartItem.dto'
 export { PostOrderItemDTO } from './dto/purchase/postOrderItem.dto';
 export { PostOrderDTO } from './dto/purchase/postOrder.dto'
 export { Product } from './entities/product.model';
+export { PostProductDTO } from './dto/product/postProduct.dto';
+export { PutProductDTO } from './dto/product/putProduct.dto';
 export { PostSignInDTO } from './dto/auth/postSignIn.dto';
 export { Jwt } from './entities/jwt.model';
 export { Order } from './entities/order.model';
@@ -17,4 +20,9 @@ export { OrderItem } from './entities/orderItem.model';
 export { CartItem } from './entities/cartItem.model';
 export { Wallet } from './entities/wallet.model';
 export { Cart } from './entities/cart.model'
+export { PutAddressDTO } from './dto/users/putAddress.dto';
 export { SupportEmailDTO } from './dto/supportEmail/supportEmail.dto'
+export { Gender } from './entities/gender.mode';
+export { Publisher } from './entities/publisher.model';
+export { RatingSystem } from './entities/ratingSystem';
+export { Platform } from './entities/platform.model'

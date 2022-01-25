@@ -5,6 +5,10 @@ export class User {
     public email?: string;
     public isEmailConfirmed?: boolean;
     public profileImage?: string;
+    public tel?: string;
+    public cel1?: string;
+    public cel2?: string;
+    public secondaryEmail?: string;
     public failedLoginAttempts?: number;
     public nextAllowedAccess?: Date;
     public banned?: boolean;

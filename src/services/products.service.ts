@@ -1,4 +1,4 @@
-import { PostProductDTO, Product, PutProductDTO } from '../models';
+import { Gender, Platform, PostProductDTO, Product, Publisher, PutProductDTO, RatingSystem } from '../models';
 import { IProductsRepository } from '../interfaces';
 import logger from '../utils/logger';
 
@@ -8,9 +8,29 @@ export class ProductsService {
 
     async get(): Promise<Product[]> {
 
-        try {
+        let response: Product[] = [];
 
-            const response = await this.productsRepository.getProducts();
+        try {
+            const products: Product[] = await this.productsRepository.getProducts();
+            for (let product of products) {
+                const id: number = product.id != null ? product.id : -1;
+                const gender: Gender | undefined = await this.productsRepository.getGender(id)
+                const publisher: Publisher | undefined = await this.productsRepository.getPublisher(id)
+                const platform: Platform | undefined = await this.productsRepository.getPlatform(id)
+                const ratingSystem: RatingSystem | undefined = await this.productsRepository.getRatingSystem(id)
+                response.push({
+                    id: id,
+                    name: product?.name,
+                    description: product?.description,
+                    price: product?.price,
+                    amount: product?.amount,
+                    releaseDate: product?.releaseDate,
+                    gender: gender,
+                    platform: platform,
+                    publisher: publisher,
+                    ratingSystem: ratingSystem
+                });
+            }
 
             return response;
 
@@ -22,14 +42,31 @@ export class ProductsService {
     }
 
     async getById(id: number): Promise<Product | null> {
+        let response: Product | null = null;
 
         try {
-            const response = await this.productsRepository.getById(id);
-            return response;
+            const product: Product | null = await this.productsRepository.getById(id);
+            const gender: Gender | undefined = await this.productsRepository.getGender(id)
+            const publisher: Publisher | undefined = await this.productsRepository.getPublisher(id)
+            const platform: Platform | undefined = await this.productsRepository.getPlatform(id)
+            const ratingSystem: RatingSystem | undefined = await this.productsRepository.getRatingSystem(id)
+            response = {
+                id: product?.id,
+                name: product?.name,
+                description: product?.description,
+                price: product?.price,
+                amount: product?.amount,
+                releaseDate: product?.releaseDate,
+                gender: gender,
+                platform: platform,
+                publisher: publisher,
+                ratingSystem: ratingSystem
+            }
 
         } catch (error: any) {
             throw new Error(error);
         }
+        return response;
     }
 
     async delete(id: number): Promise<void> {

@@ -37,7 +37,6 @@ export class UsersService {
         try {
 
             const response = await this.usersRepository.getUser(username);
-
             return response;
 
         } catch (error: any) {

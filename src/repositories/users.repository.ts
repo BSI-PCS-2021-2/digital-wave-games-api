@@ -75,6 +75,7 @@ export class UsersRepository implements IUsersRepository {
                             secondaryEmail: userResult['email_secundario'],
                             failedLoginAttempts: userResult['acesso_falho'],
                             nextAllowedAccess: userResult['liberar_acesso'],
+                            resetFailedLoginAttempts: userResult['reset_acesso_falho'],
                             banned: userResult['bloqueado']
                         };
 
@@ -90,7 +91,6 @@ export class UsersRepository implements IUsersRepository {
             logger.error(error);
             throw new Error(error);
         }
-
         return user;
 
     }

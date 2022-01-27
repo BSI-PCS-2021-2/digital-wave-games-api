@@ -27,4 +27,27 @@ export class AuthenticationController {
         }
 
     }
+
+    async loginAdm(request: Request, response: Response): Promise<Response> {
+
+        const { 
+            username,
+            password
+         } = request.body;
+        try {
+
+            const result = await this.authenticationService.loginAdm({
+                username: username,
+                password: password
+            });
+
+            return response.send(result);
+            
+        } catch (error: any) {
+            return response.status(400).json({
+                message: error.message || 'Unexpected error.'
+            })
+        }
+
+    }
 }

@@ -41,3 +41,10 @@ export const EMAIL = {
   EMAIL_USER: _.defaultTo(dotenv.config().parsed?.EMAIL_USER, ""),
   EMAIL_PASSWORD: _.defaultTo(dotenv.config().parsed?.EMAIL_PASSWORD, ""),
 };
+
+export const ADM = {
+  ADM_USERNAME: _.defaultTo(dotenv.config().parsed?.ADM_USERNAME, ""),
+  ADM_PASSWORD: _.defaultTo(dotenv.config().parsed?.ADM_PASSWORD, ""),
+  ADM_ID: _.defaultTo(dotenv.config().parsed?.ADM_ID, ""),
+  ADM_NAME: _.defaultTo(dotenv.config().parsed?.ADM_NAME, ""),
+}

@@ -1,4 +1,5 @@
 import { Jwt, PostSignInDTO, User } from "../models";
+import { ADM } from "../utils/secrets"
 import logger from "../utils/logger";
 import * as jsonwebtoken from 'jsonwebtoken';
 import { ENCRYPTION_SECRET, RSA_PRIVATE_KEY } from "../utils/secrets";
@@ -72,6 +73,39 @@ export class AuthenticationService {
             throw new Error(error);
         }
         return response;
+
+    }
+
+    async loginAdm(postSignInDTO: PostSignInDTO): Promise<Jwt | null> {
+
+        const username = postSignInDTO.username;
+        const password = postSignInDTO.password;
+
+        let jwt: Jwt | null = null;
+        let response: SignInResponse | null = null;
+
+        try {
+            if (username === ADM.ADM_USERNAME && sha256(password + ENCRYPTION_SECRET).toString() === ADM.ADM_PASSWORD) {
+                
+                const jwtBearerToken = jsonwebtoken.sign({}, RSA_PRIVATE_KEY, {
+                    algorithm: 'RS256',
+                    expiresIn: 86400, // um dia
+                    subject: username
+                });
+
+                jwt = {
+                    idToken: jwtBearerToken, 
+                    expiresIn: 86400,
+                    username: username,
+                };
+                return jwt;         
+            
+            }                
+        } catch (error: any) {
+            logger.error(error);
+            throw new Error(error);
+        }
+        return jwt;
 
     }
 

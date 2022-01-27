@@ -10,6 +10,10 @@ router.post("/authenticate", (request, response) => {
   return authenticationController.post(request, response);
 });
 
+router.post("/authenticate/admin", (request, response) => {
+  return authenticationController.loginAdm(request, response);
+});
+
 router.post("/authenticate-with-google", (request, response) => {
   return googleAuthenticationController.post(request, response);
 });

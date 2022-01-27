@@ -10,6 +10,7 @@ export class Product {
     public amount?: number;
     public description?: string;
     public releaseDate?: Date;
+    public imgUrl?: string;
     public gender?: Gender;
     public platform?: Platform;
     public publisher?: Publisher;

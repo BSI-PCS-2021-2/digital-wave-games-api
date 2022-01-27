@@ -95,34 +95,6 @@ export class CartsRepository implements ICartsRepository{
 
     }
 
-    async getWeight(cartId: number): Promise<number> {
-
-        let weight = 0;
-
-        const sql = `SELECT sum(ic.quantidade * p.peso) as sum FROM item_carrinho as ic join produto as p on ic.id_produto = p.id where id_carrinho=?`;
-        try {
-            await mysqlDatabase.default.raw(sql, [cartId || null]).then(data => {
-                if (data[0].length > 0) {
-                    data[0].forEach((result: any) => {
-
-                        weight = result['sum'];
-                  });
-                }
-
-            }).catch(err => {
-                logger.error(err);
-                throw new Error(err);
-            });
-
-        } catch (error: any) {
-            logger.error(error);
-            throw new Error(error);
-        }
-        console.log(weight);
-        return weight;
-
-    }
-
   async postCart(postCartDTO: PostCartDTO): Promise<number[]> {
 
     let index: number[] = [];

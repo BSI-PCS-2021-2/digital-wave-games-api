@@ -7,5 +7,4 @@ export interface ICartsRepository {
   getCartByClient(clientId: number): Promise<Cart | null>;
   cleanCart(cartId: number): Promise<boolean>;
   getTotalPrice(cartId: number): Promise<number>;
-  getWeight(cartId: number): Promise<number>;
 }

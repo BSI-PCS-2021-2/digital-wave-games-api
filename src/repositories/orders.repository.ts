@@ -19,7 +19,6 @@ export class OrdersRepository implements IOrdersRepository {
                     orders.push({
                         id: result['id'],
                         totalPrice: result['preco_total'],
-                        totalWeight: result['peso_total'],
                         expectedDeliveryDate: result['data_previsao_entrega'],
                         purchaseDate: result['data_compra'],
                         paymentType: result['id_forma_pagamento'],
@@ -57,7 +56,6 @@ export class OrdersRepository implements IOrdersRepository {
                     order = {
                       id: result['id'],
                       totalPrice: result['preco_total'],
-                      totalWeight: result['peso_total'],
                       expectedDeliveryDate: result['data_previsao_entrega'],
                       purchaseDate: result['data_compra'],
                       paymentType: result['id_forma_pagamento'],
@@ -90,7 +88,6 @@ export class OrdersRepository implements IOrdersRepository {
             .returning('id')
             .insert([{
                 preco_total: order.totalPrice || null,
-                peso_total: order.totalWeight || null,
                 data_previsao_entrega: order.expectedDeliveryDate || null,
                 data_compra: order.purchaseDate || null,
                 id_forma_pagamento: order.paymentType || null,

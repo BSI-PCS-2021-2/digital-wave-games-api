@@ -5,6 +5,7 @@ export interface PostProductDTO {
     description?: string;
     releaseDate?: string;
     imgUrl?: string;
+    youtubeIds?: string[];
     genderId?: number;
     platformId?: number;
     publisherId?: number;

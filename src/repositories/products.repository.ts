@@ -23,7 +23,8 @@ export class ProductsRepository implements IProductsRepository {
                             amount: result['quantidade'],
                             description: result['descricao'],
                             releaseDate: result['data_lancamento'],
-                            imgUrl: result['imgUrl']
+                            imgUrl: result['imgUrl'],
+                            youtubeIds: result['youtube_ids'].split(',')
                         });
                     });
                 }
@@ -54,7 +55,8 @@ export class ProductsRepository implements IProductsRepository {
                             amount: result['quantidade'],
                             description: result['descricao'],
                             releaseDate: result['data_lancamento'],
-                            imgUrl: result['imgUrl']
+                            imgUrl: result['imgUrl'],
+                            youtubeIds: result['youtube_ids'].split(',')
                         };
                     });
                 }
@@ -83,6 +85,7 @@ export class ProductsRepository implements IProductsRepository {
                     descricao: dto.description || null,
                     data_lancamento: dto.releaseDate || null,
                     imgUrl: dto.imgUrl || null,
+                    youtube_ids: dto.youtubeIds?.join(','),
                     id_plataforma: dto.platformId || null,
                     id_publisher: dto.publisherId || null,
                     id_classificacao_indicativa: dto.ratingSystemId || null,
@@ -111,6 +114,7 @@ export class ProductsRepository implements IProductsRepository {
                     descricao: dto.description || null,
                     data_lancamento: dto.releaseDate || null,
                     imgUrl: dto.imgUrl || null,
+                    youtube_ids: dto.youtubeIds?.join(','),
                     id_plataforma: dto.platformId || null,
                     id_publisher: dto.publisherId || null,
                     id_classificacao_indicativa: dto.ratingSystemId || null,

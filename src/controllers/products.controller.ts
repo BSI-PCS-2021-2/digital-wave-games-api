@@ -42,6 +42,7 @@ export class ProductsController {
             amount,
             releaseDate,
             imgUrl,
+            youtubeIds,
             genderId,
             platformId,
             publisherId,
@@ -55,6 +56,7 @@ export class ProductsController {
                 amount: amount,
                 releaseDate: releaseDate,
                 imgUrl: imgUrl,
+                youtubeIds: youtubeIds,
                 genderId: genderId,
                 platformId: platformId,
                 publisherId: publisherId,
@@ -67,7 +69,6 @@ export class ProductsController {
                 message: error.message || 'Unexpected error.'
             })
         }
-
     }
 
     async put(request: Request, response: Response): Promise<Response> {
@@ -79,6 +80,7 @@ export class ProductsController {
             amount,
             releaseDate,
             imgUrl,
+            youtubeIds,
             genderId,
             platformId,
             publisherId,
@@ -93,6 +95,7 @@ export class ProductsController {
                 amount: amount,
                 releaseDate: releaseDate,
                 imgUrl: imgUrl,
+                youtubeIds: youtubeIds,
                 genderId: genderId,
                 platformId: platformId,
                 publisherId: publisherId,

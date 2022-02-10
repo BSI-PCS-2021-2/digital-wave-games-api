@@ -43,7 +43,7 @@ export class ChargesService {
               birth: "1970-01-01",
               phone_number: "1199999999",
             },
-            expire_at: "2022-02-03",
+            expire_at: "2022-02-17",
           },
         },
       };

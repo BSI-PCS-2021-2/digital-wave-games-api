@@ -83,7 +83,8 @@ const ordersService = new OrdersService(
   walletsRepository,
   cartItemsRepository,
   cartsRepository,
-  productsRepository
+  productsRepository,
+  usersRepository
 );
 const orderItemsService = new OrderItemsService(orderItemsRepository);
 const cartsService = new CartsService(cartsRepository);

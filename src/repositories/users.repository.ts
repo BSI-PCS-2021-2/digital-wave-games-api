@@ -86,6 +86,46 @@ export class UsersRepository implements IUsersRepository {
     return user;
   }
 
+  async getUserById(id: number | undefined): Promise<User | null> {
+    let user: User | null = null;
+
+    const sql = `SELECT * FROM usuario_cliente WHERE id = ?;`;
+    try {
+      await mysqlDatabase.default
+        .raw(sql, [id || null])
+        .then((data) => {
+          if (data[0].length > 0) {
+            data[0].forEach((userResult: any) => {
+              user = {
+                id: userResult["id"],
+                username: userResult["nome_usuario"],
+                name: userResult["nome"],
+                email: userResult["email"],
+                isEmailConfirmed: userResult["email_confirmado"],
+                profileImage: userResult["foto_perfil"],
+                tel: userResult["tel_1"],
+                cel1: userResult["tel_2"],
+                cel2: userResult["tel_3"],
+                secondaryEmail: userResult["email_secundario"],
+                failedLoginAttempts: userResult["acesso_falho"],
+                nextAllowedAccess: userResult["liberar_acesso"],
+                resetFailedLoginAttempts: userResult["reset_acesso_falho"],
+                banned: userResult["bloqueado"],
+              };
+            });
+          }
+        })
+        .catch((error: any) => {
+          logger.error(error);
+          throw new Error(error);
+        });
+    } catch (error: any) {
+      logger.error(error);
+      throw new Error(error);
+    }
+    return user;
+  }
+
   async getUserPassword(username: string): Promise<string> {
     let password: string = "";
 

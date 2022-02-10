@@ -1,27 +1,30 @@
-import { EMAIL } from '../utils/secrets';
-import logger from './logger';
+import { EMAIL } from "../utils/secrets";
+import logger from "./logger";
 
-const nodemailer = require('nodemailer');
+const nodemailer = require("nodemailer");
 
-export function sendEmail(to: string | undefined, subject: string, body: string) {
-
+export function sendEmail(
+  to: string | undefined,
+  subject: string,
+  body: string
+) {
   const transporter = nodemailer.createTransport({
     service: EMAIL.EMAIL_SERVICE,
     host: EMAIL.EMAIL_HOST,
     auth: {
       user: EMAIL.EMAIL_USER,
-      pass: EMAIL.EMAIL_PASSWORD
-    }
+      pass: EMAIL.EMAIL_PASSWORD,
+    },
   });
 
   const mailOptions = {
     from: EMAIL.EMAIL_USER,
     to: to,
     subject: subject,
-    text: body
+    html: body,
   };
 
-  transporter.sendMail(mailOptions, function(error: any, info: any){
+  transporter.sendMail(mailOptions, function (error: any, info: any) {
     logger.error(error);
-  });  
+  });
 }
